@@ -10,6 +10,9 @@
     },
     "webapp-with-database-21-07-app-service-planName": {
       "value": "webapp-with-database-21-07-app-service-plan"
+    },
+    "webapp-with-database-21-07AdminLoginPassword": {
+      "value": "@hd04061989"
     }
   }
 }
