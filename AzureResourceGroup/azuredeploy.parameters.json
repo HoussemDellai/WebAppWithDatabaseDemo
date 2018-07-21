@@ -1,0 +1,15 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "webapp-with-database-21-07AdminLogin": {
+      "value": "houssem"
+    },
+    "webapp-with-database-21-07-dbName": {
+      "value": "EmployeesDB"
+    },
+    "webapp-with-database-21-07-app-service-planName": {
+      "value": "webapp-with-database-21-07-app-service-plan"
+    }
+  }
+}

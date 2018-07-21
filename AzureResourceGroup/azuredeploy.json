@@ -1,0 +1,157 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "webapp-with-database-21-07AdminLogin": {
+      "type": "string",
+      "minLength": 1
+    },
+    "webapp-with-database-21-07AdminLoginPassword": {
+      "type": "securestring"
+    },
+    "webapp-with-database-21-07-dbName": {
+      "type": "string",
+      "minLength": 1
+    },
+    "webapp-with-database-21-07-dbCollation": {
+      "type": "string",
+      "minLength": 1,
+      "defaultValue": "SQL_Latin1_General_CP1_CI_AS"
+    },
+    "webapp-with-database-21-07-dbEdition": {
+      "type": "string",
+      "defaultValue": "Basic",
+      "allowedValues": [
+        "Basic",
+        "Standard",
+        "Premium"
+      ]
+    },
+    "webapp-with-database-21-07-dbRequestedServiceObjectiveName": {
+      "type": "string",
+      "defaultValue": "Basic",
+      "allowedValues": [
+        "Basic",
+        "S0",
+        "S1",
+        "S2",
+        "P1",
+        "P2",
+        "P3"
+      ],
+      "metadata": {
+        "description": "Describes the performance level for Edition"
+      }
+    },
+    "webapp-with-database-21-07-app-service-planName": {
+      "type": "string",
+      "minLength": 1
+    },
+    "webapp-with-database-21-07-app-service-planSkuName": {
+      "type": "string",
+      "defaultValue": "F1",
+      "allowedValues": [
+        "F1",
+        "D1",
+        "B1",
+        "B2",
+        "B3",
+        "S1",
+        "S2",
+        "S3",
+        "P1",
+        "P2",
+        "P3",
+        "P4"
+      ],
+      "metadata": {
+        "description": "Describes plan's pricing tier and capacity. Check details at https://azure.microsoft.com/en-us/pricing/details/app-service/"
+      }
+    }},
+  "variables": {
+    "webapp-with-database-21-07Name": "[concat('webapp-with-database-21-07', uniqueString(resourceGroup().id))]",
+    "webapp-with-database-21-07-webappName": "[concat('webapp-with-database-21-07-webapp', uniqueString(resourceGroup().id))]"},
+  "resources": [
+    {
+      "name": "[variables('webapp-with-database-21-07Name')]",
+      "type": "Microsoft.Sql/servers",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2014-04-01-preview",
+      "dependsOn": [ ],
+      "tags": {
+        "displayName": "webapp-with-database-21-07"
+      },
+      "properties": {
+        "administratorLogin": "[parameters('webapp-with-database-21-07AdminLogin')]",
+        "administratorLoginPassword": "[parameters('webapp-with-database-21-07AdminLoginPassword')]"
+      },
+      "resources": [
+        {
+          "name": "AllowAllWindowsAzureIps",
+          "type": "firewallrules",
+          "location": "[resourceGroup().location]",
+          "apiVersion": "2014-04-01-preview",
+          "dependsOn": [
+            "[resourceId('Microsoft.Sql/servers', variables('webapp-with-database-21-07Name'))]"
+          ],
+          "properties": {
+            "startIpAddress": "0.0.0.0",
+            "endIpAddress": "0.0.0.0"
+          }
+        },
+        {
+          "name": "[parameters('webapp-with-database-21-07-dbName')]",
+          "type": "databases",
+          "location": "[resourceGroup().location]",
+          "apiVersion": "2014-04-01-preview",
+          "dependsOn": [
+            "[resourceId('Microsoft.Sql/servers', variables('webapp-with-database-21-07Name'))]"
+          ],
+          "tags": {
+            "displayName": "webapp-with-database-21-07-db"
+          },
+          "properties": {
+            "collation": "[parameters('webapp-with-database-21-07-dbCollation')]",
+            "edition": "[parameters('webapp-with-database-21-07-dbEdition')]",
+            "maxSizeBytes": "1073741824",
+            "requestedServiceObjectiveName": "[parameters('webapp-with-database-21-07-dbRequestedServiceObjectiveName')]"
+          }
+        }
+      ]
+    },
+    {
+      "name": "[parameters('webapp-with-database-21-07-app-service-planName')]",
+      "type": "Microsoft.Web/serverfarms",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2015-08-01",
+      "sku": {
+        "name": "[parameters('webapp-with-database-21-07-app-service-planSkuName')]"
+      },
+      "dependsOn": [ ],
+      "tags": {
+        "displayName": "webapp-with-database-21-07-app-service-plan"
+      },
+      "properties": {
+        "name": "[parameters('webapp-with-database-21-07-app-service-planName')]",
+        "numberOfWorkers": 1
+      }
+    },
+    {
+      "name": "[variables('webapp-with-database-21-07-webappName')]",
+      "type": "Microsoft.Web/sites",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2015-08-01",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/serverfarms', parameters('webapp-with-database-21-07-app-service-planName'))]"
+      ],
+      "tags": {
+        "[concat('hidden-related:', resourceId('Microsoft.Web/serverfarms', parameters('webapp-with-database-21-07-app-service-planName')))]": "Resource",
+        "displayName": "webapp-with-database-21-07-webapp"
+      },
+      "properties": {
+        "name": "[variables('webapp-with-database-21-07-webappName')]",
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('webapp-with-database-21-07-app-service-planName'))]"
+      }
+    }],
+  "outputs": {}
+}
