@@ -151,7 +151,26 @@
       "properties": {
         "name": "[variables('webapp-with-database-21-07-webappName')]",
         "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('webapp-with-database-21-07-app-service-planName'))]"
-      }
+      },
+      "resources": [
+        {
+          "name": "appsettings",
+          "type": "config",
+          "apiVersion": "2015-08-01",
+          "dependsOn": [
+            "[resourceId('Microsoft.Web/sites', variables('webapp-with-database-21-07-webappName'))]"
+          ],
+          "tags": {
+            "displayName": "ConnectionStrings"
+          },
+          "properties": {
+            "WebAppContext": {
+              "value": "[concat('Data Source=tcp:', reference(concat('Microsoft.Sql/servers/', variables('webapp-with-database-21-07Name'))).fullyQualifiedDomainName, ',1433;Initial Catalog=', parameters('webapp-with-database-21-07-dbName'), ';User Id=', parameters('webapp-with-database-21-07AdminLogin'), '@', reference(concat('Microsoft.Sql/servers/', variables('webapp-with-database-21-07Name'))).fullyQualifiedDomainName, ';Password=', parameters('webapp-with-database-21-07AdminLoginPassword'), ';')]",
+              "type": "SQLAzure"
+            }
+          }
+        }
+      ]
     }],
   "outputs": {}
 }
