@@ -67,17 +67,19 @@
       "metadata": {
         "description": "Describes plan's pricing tier and capacity. Check details at https://azure.microsoft.com/en-us/pricing/details/app-service/"
       }
-    }},
+    }
+  },
   "variables": {
     "webapp-with-database-21-07Name": "[concat('webapp-with-database-21-07', uniqueString(resourceGroup().id))]",
-    "webapp-with-database-21-07-webappName": "[concat('webapp-with-database-21-07-webapp', uniqueString(resourceGroup().id))]"},
+    "webapp-with-database-21-07-webappName": "[concat('webapp-with-database-21-07-webapp', uniqueString(resourceGroup().id))]"
+  },
   "resources": [
     {
       "name": "[variables('webapp-with-database-21-07Name')]",
       "type": "Microsoft.Sql/servers",
       "location": "[resourceGroup().location]",
       "apiVersion": "2014-04-01-preview",
-      "dependsOn": [ ],
+      "dependsOn": [],
       "tags": {
         "displayName": "webapp-with-database-21-07"
       },
@@ -127,7 +129,7 @@
       "sku": {
         "name": "[parameters('webapp-with-database-21-07-app-service-planSkuName')]"
       },
-      "dependsOn": [ ],
+      "dependsOn": [],
       "tags": {
         "displayName": "webapp-with-database-21-07-app-service-plan"
       },
@@ -150,27 +152,18 @@
       },
       "properties": {
         "name": "[variables('webapp-with-database-21-07-webappName')]",
-        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('webapp-with-database-21-07-app-service-planName'))]"
-      },
-      "resources": [
-        {
-          "name": "appsettings",
-          "type": "config",
-          "apiVersion": "2015-08-01",
-          "dependsOn": [
-            "[resourceId('Microsoft.Web/sites', variables('webapp-with-database-21-07-webappName'))]"
-          ],
-          "tags": {
-            "displayName": "ConnectionStrings"
-          },
-          "properties": {
-            "WebAppContext": {
-              "value": "[concat('Data Source=tcp:', reference(concat('Microsoft.Sql/servers/', variables('webapp-with-database-21-07Name'))).fullyQualifiedDomainName, ',1433;Initial Catalog=', parameters('webapp-with-database-21-07-dbName'), ';User Id=', parameters('webapp-with-database-21-07AdminLogin'), '@', reference(concat('Microsoft.Sql/servers/', variables('webapp-with-database-21-07Name'))).fullyQualifiedDomainName, ';Password=', parameters('webapp-with-database-21-07AdminLoginPassword'), ';')]",
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('webapp-with-database-21-07-app-service-planName'))]",
+        "siteConfig": {
+          "connectionStrings": [
+            {
+              "name": "WebAppContext",
+              "connectionString": "[concat('Server=tcp:webapp-with-database-21-073msfrub264gus.database.windows.net,1433;Initial Catalog=EmployeesDB;Persist Security Info=False;User ID=houssem;Password=', parameters('webapp-with-database-21-07AdminLoginPassword'), ';MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;')]",
               "type": "SQLAzure"
             }
-          }
+          ]
         }
-      ]
-    }],
+      }
+    }
+  ],
   "outputs": {}
 }
