@@ -9,6 +9,8 @@ Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "WebApp.Database", "WebApp.D
 EndProject
 Project("{151D2E53-A2C4-4D7D-83FE-D05416EBD58E}") = "AzureResourceGroup", "AzureResourceGroup\AzureResourceGroup.deployproj", "{722B617D-276D-436C-9AB0-32D2A94F5F3A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApp.UnitTest", "WebApp.UnitTest\WebApp.UnitTest.csproj", "{DD134753-D2C9-4805-B4F5-FC26BDDBB496}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +31,10 @@ Global
 		{722B617D-276D-436C-9AB0-32D2A94F5F3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{722B617D-276D-436C-9AB0-32D2A94F5F3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{722B617D-276D-436C-9AB0-32D2A94F5F3A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD134753-D2C9-4805-B4F5-FC26BDDBB496}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD134753-D2C9-4805-B4F5-FC26BDDBB496}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD134753-D2C9-4805-B4F5-FC26BDDBB496}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD134753-D2C9-4805-B4F5-FC26BDDBB496}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
