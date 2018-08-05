@@ -2,17 +2,20 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "webapp-with-database-21-07AdminLogin": {
+    "webAppSuffix": {
+      "value": "#{AzureTargetWebAppName}#"
+    },
+    "webappAdminLogin": {
       "value": "houssem"
     },
-    "webapp-with-database-21-07-dbName": {
+    "webappAdminLoginPassword": {
+      "value": "@Aa123456"
+    },
+    "webapp-dbName": {
       "value": "EmployeesDB"
     },
-    "webapp-with-database-21-07-app-service-planName": {
-      "value": "webapp-with-database-21-07-app-service-plan"
-    },
-    "webapp-with-database-21-07AdminLoginPassword": {
-      "value": "@hd04061989"
+    "webapp-app-service-planName": {
+      "value": "webapp-app-service-plan"
     }
   }
 }
