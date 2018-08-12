@@ -3,13 +3,16 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "hostingPlanName": {
-      "value": null
+      "value": "houssemdellai-service-plan"
     },
     "administratorLogin": {
-      "value": null
+      "value": "houssem"
+    },
+    "administratorLoginPassword": {
+      "value": "@Aa123456"
     },
     "databaseName": {
-      "value": null
+      "value": "EmployeesDB"
     }
   }
 }

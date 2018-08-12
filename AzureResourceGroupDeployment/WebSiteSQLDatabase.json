@@ -79,8 +79,10 @@
     }
   },
   "variables": {
-    "webSiteName": "[concat('webSite', uniqueString(resourceGroup().id))]",
-    "sqlserverName": "[concat('sqlserver', uniqueString(resourceGroup().id))]"
+    "webSiteName": "houssemdellai-",
+    "sqlserverName": "houssemdellai-sql"
+    //"webSiteName": "[concat('webSite', uniqueString(resourceGroup().id))]",
+    //"sqlserverName": "[concat('sqlserver', uniqueString(resourceGroup().id))]"
   },
   "resources": [
     {
