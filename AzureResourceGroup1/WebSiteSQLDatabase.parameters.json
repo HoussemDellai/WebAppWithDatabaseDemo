@@ -1,0 +1,24 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "hostingPlanName": {
+      "value": "houssemdellai-hostingplan"
+    },
+    "administratorLogin": {
+      "value": "houssem"
+    },
+    "administratorLoginPassword": {
+      "value": "@Aa123456"
+    },
+    "databaseName": {
+      "value": "houssemdellai-database-demo"
+    },
+    "webSiteName": {
+      "value": "houssemdellai-web-demo"
+    },
+    "sqlserverName": {
+      "value": "houssemdellai-sql-demo"
+    }
+  }
+}
