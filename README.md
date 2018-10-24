@@ -1,10 +1,6 @@
 # WebAppWithDatabaseDemo
 Sample ASP.NET Core MVC app with database for demoing CI-CD pipelines using Azure DevOps (previously VSTS) 
 
-<a href="http://armviz.io/#/?load=https://raw.githubusercontent.com/HoussemDellai/WebAppWithDatabaseDemo/master/AzureResourceGroupDeployment/WebSiteSQLDatabase.json" target="_blank">
-  <img src="http://armviz.io/visualizebutton.png"/>
-</a>
-
 </br>
 
 <table>
@@ -29,5 +25,13 @@ Sample ASP.NET Core MVC app with database for demoing CI-CD pipelines using Azur
   </td>
   </tr>
   </table>
+  
+  </br>
+  
+  <a href="http://armviz.io/#/?load=https://raw.githubusercontent.com/HoussemDellai/WebAppWithDatabaseDemo/master/AzureResourceGroupDeployment/WebSiteSQLDatabase.json" target="_blank">
+  <img src="http://armviz.io/visualizebutton.png"/>
+</a>
+
+</br>
       
 https://www.youtube.com/watch?v=uVne2HXkWXI&list=PLpbcUe4chE78FEvDjD9zfzSGvsdkvkkrj&index=1
