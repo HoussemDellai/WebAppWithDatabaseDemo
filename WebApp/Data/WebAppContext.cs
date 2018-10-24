@@ -11,7 +11,7 @@ namespace WebApp.Models
         public WebAppContext (DbContextOptions<WebAppContext> options)
             : base(options)
         {
-            Database.EnsureCreated();
+            //Database.EnsureCreated();
         }
 
         public DbSet<WebApp.Models.Employee> Employee { get; set; }
