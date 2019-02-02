@@ -12,7 +12,7 @@ using OpenQA.Selenium.PhantomJS;
 namespace SeleniumUiTests
 {
     [TestClass]
-    public class UnitTest1
+    public class EmployeesUnitTests
     {
         private string websiteURL = @"https://ignite-webapp-prod-984.azurewebsites.net/Employees/";
         private RemoteWebDriver browserDriver;
