@@ -14,7 +14,7 @@ namespace SeleniumUiTests
     [TestClass]
     public class EmployeesUiTests
     {
-        private string _websiteURL = "https://ignite-webapp-dev-984.azurewebsites.net/";
+        private string _websiteURL = "https://ignite-webapp-test-995.azurewebsites.net/";
         private RemoteWebDriver _browserDriver;
         public TestContext TestContext { get; set; }
 
