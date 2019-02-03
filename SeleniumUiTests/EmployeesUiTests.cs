@@ -14,13 +14,14 @@ namespace SeleniumUiTests
     [TestClass]
     public class EmployeesUiTests
     {
-        private string _websiteURL = "https://ignite-webapp-dev-984.azurewebsites.net/Employees/";
+        private string _websiteURL = "https://ignite-webapp-dev-984.azurewebsites.net/";
         private RemoteWebDriver _browserDriver;
         public TestContext TestContext { get; set; }
 
         [TestInitialize()]
         public void PU_SearchTests_Initialize()
         {
+           _websiteURL = (string) TestContext.Properties["webAppUrl"];
         }
 
         [TestMethod]
@@ -34,7 +35,7 @@ namespace SeleniumUiTests
             _browserDriver = new ChromeDriver();
             _browserDriver.Manage().Window.Maximize();
             _browserDriver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(20));
-            _browserDriver.Navigate().GoToUrl(_websiteURL + "Create");
+            _browserDriver.Navigate().GoToUrl(_websiteURL + "Employees/Create");
 
             _browserDriver.FindElementById("Fullname").Clear();
             _browserDriver.FindElementById("Fullname").SendKeys(fullname);
