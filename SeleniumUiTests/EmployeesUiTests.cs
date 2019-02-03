@@ -36,6 +36,7 @@ namespace SeleniumUiTests
             _browserDriver.Manage().Window.Maximize();
             _browserDriver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(20));
             _browserDriver.Navigate().GoToUrl(_websiteURL + "Employees/Create");
+            _browserDriver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(20));
 
             _browserDriver.FindElementById("Fullname").Clear();
             _browserDriver.FindElementById("Fullname").SendKeys(fullname);
