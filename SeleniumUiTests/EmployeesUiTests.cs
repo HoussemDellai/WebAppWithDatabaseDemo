@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Drawing.Imaging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using OpenQA.Selenium;
@@ -14,7 +15,7 @@ namespace SeleniumUiTests
     [TestClass]
     public class EmployeesUiTests
     {
-        private string _websiteURL = "https://ignite-webapp-test-995.azurewebsites.net/";
+        private string _websiteURL = "https://ignite-webapp-test-997.azurewebsites.net/";
         private RemoteWebDriver _browserDriver;
         public TestContext TestContext { get; set; }
 
@@ -53,6 +54,11 @@ namespace SeleniumUiTests
             _browserDriver.FindElementById("Address").Clear();
             _browserDriver.FindElementById("Address").SendKeys(address);
 
+            var screenshot = _browserDriver.GetScreenshot();
+            var fileName = $"{fullname}.jpg";
+            screenshot.SaveAsFile(fileName, ImageFormat.Jpeg);
+            TestContext.AddResultFile(fileName);
+            
             // Act
             _browserDriver.FindElement(By.CssSelector("input.btn.btn-default")).Click();
 
