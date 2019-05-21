@@ -94,4 +94,30 @@ jobs:
     inputs:
       ArtifactName: dacpac
 
+- job: Selenium
+  displayName: 'Build UI Tests'
+  pool:
+    name: Hosted VS2017
+    demands: msbuild
+
+  steps:
+  - task: NuGetToolInstaller@0
+    displayName: 'Use NuGet 4.3.0'
+
+  - task: NuGetCommand@2
+    displayName: 'NuGet restore'
+    inputs:
+      restoreSolution: WebAppWithDatabase.sln
+
+  - task: MSBuild@1
+    displayName: 'Build project SeleniumUiTests.csproj'
+    inputs:
+      solution: SeleniumUiTests/SeleniumUiTests.csproj
+      msbuildArguments: '/p:OutDir=$(Build.ArtifactStagingDirectory)'
+
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Artifact: UI-Test'
+    inputs:
+      ArtifactName: 'UI-Test'
+
 
