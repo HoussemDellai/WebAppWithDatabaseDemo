@@ -1,71 +1,78 @@
-pool:
-  name: Hosted VS2017
-  demands: java
+jobs:
+- job: A
+  steps:
+  - bash: echo "A"
 
-variables:
-  BuildConfiguration: release
-
-steps:
-- task: DotNetCoreCLI@2
-  displayName: Restore
-  inputs:
-    command: restore
-    projects: '**/WebApp.csproj'
-
-- powershell: |
-   Write-Host "Hello World"
-   
-   $paths = Get-ChildItem -include *.csproj -Recurse
-   foreach($pathobject in $paths) 
-   {
-       $path = $pathobject.fullname
-       $doc = New-Object System.Xml.XmlDocument
-       $doc.Load($path)
-       $child = $doc.CreateElement("ProjectGuid")
-       $child.InnerText = [guid]::NewGuid().ToString().ToUpper()
-       $node = $doc.SelectSingleNode("//Project/PropertyGroup")
-       $node.AppendChild($child)
-       $doc.Save($path)
-   }
-  workingDirectory: WebApp
-  displayName: 'PS : Add Project GUID'
-
-- task: SonarCloudPrepare@1
-  displayName: 'Prepare analysis on SonarCloud'
-  inputs:
-    SonarCloud: SonarCloud
-    organization: houssemdellai
-    projectKey: WebAppWithDatabaseDemo
-
-- task: DotNetCoreCLI@2
-  displayName: Build
-  inputs:
-    projects: '**/WebApp.csproj'
-    arguments: '--configuration $(BuildConfiguration)'
-
-- task: DotNetCoreCLI@2
-  displayName: Test
-  inputs:
-    command: test
-    projects: '**/*UnitTest*.csproj'
-    arguments: '--configuration $(BuildConfiguration)'
-
-- task: DotNetCoreCLI@2
-  displayName: Publish
-  inputs:
-    command: publish
-    publishWebProjects: True
-    arguments: '--configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory)'
-    zipAfterPublish: True
-
-- task: SonarCloudAnalyze@1
-  displayName: 'Run Code Analysis'
-
-- task: SonarCloudPublish@1
-  displayName: 'Publish Quality Gate Result'
-
-- task: PublishBuildArtifacts@1
-  displayName: 'Publish Artifact (WebApp.zip)'
-  inputs:
-    PathtoPublish: '$(build.artifactstagingdirectory)'
+- job: WebApp
+  displayName: "Build Web App"
+  pool:
+    name: Hosted VS2017
+    demands: java
+  
+  variables:
+    BuildConfiguration: release
+  
+  steps:
+  - task: DotNetCoreCLI@2
+    displayName: Restore
+    inputs:
+      command: restore
+      projects: '**/WebApp.csproj'
+  
+  - powershell: |
+     Write-Host "Hello World"
+     
+     $paths = Get-ChildItem -include *.csproj -Recurse
+     foreach($pathobject in $paths) 
+     {
+         $path = $pathobject.fullname
+         $doc = New-Object System.Xml.XmlDocument
+         $doc.Load($path)
+         $child = $doc.CreateElement("ProjectGuid")
+         $child.InnerText = [guid]::NewGuid().ToString().ToUpper()
+         $node = $doc.SelectSingleNode("//Project/PropertyGroup")
+         $node.AppendChild($child)
+         $doc.Save($path)
+     }
+    workingDirectory: WebApp
+    displayName: 'PS : Add Project GUID'
+  
+  - task: SonarCloudPrepare@1
+    displayName: 'Prepare analysis on SonarCloud'
+    inputs:
+      SonarCloud: SonarCloud
+      organization: houssemdellai
+      projectKey: WebAppWithDatabaseDemo
+  
+  - task: DotNetCoreCLI@2
+    displayName: Build
+    inputs:
+      projects: '**/WebApp.csproj'
+      arguments: '--configuration $(BuildConfiguration)'
+  
+  - task: DotNetCoreCLI@2
+    displayName: Test
+    inputs:
+      command: test
+      projects: '**/*UnitTest*.csproj'
+      arguments: '--configuration $(BuildConfiguration)'
+  
+  - task: DotNetCoreCLI@2
+    displayName: Publish
+    inputs:
+      command: publish
+      publishWebProjects: True
+      arguments: '--configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory)'
+      zipAfterPublish: True
+  
+  - task: SonarCloudAnalyze@1
+    displayName: 'Run Code Analysis'
+  
+  - task: SonarCloudPublish@1
+    displayName: 'Publish Quality Gate Result'
+  
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Artifact (WebApp.zip)'
+    inputs:
+      PathtoPublish: '$(build.artifactstagingdirectory)'
 
