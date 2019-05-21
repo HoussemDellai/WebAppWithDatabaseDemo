@@ -120,4 +120,15 @@ jobs:
     inputs:
       ArtifactName: 'UI-Test'
 
+- job: Infrastructure
+  displayName: 'Copy Infrastructure files (ARM)'
+  pool:
+    name: Hosted VS2017
+  steps:
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Artifact: ARM templates'
+    inputs:
+      PathtoPublish: AzureResourceGroupDeployment
+      ArtifactName: arm
+
 
