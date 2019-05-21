@@ -4,7 +4,7 @@ jobs:
   - bash: echo "A"
 
 - job: WebApp
-  displayName: "Build Web App"
+  displayName: 'Build Web App'
   pool:
     name: Hosted VS2017
     demands: java
@@ -75,4 +75,23 @@ jobs:
     displayName: 'Publish Artifact (WebApp.zip)'
     inputs:
       PathtoPublish: '$(build.artifactstagingdirectory)'
+
+- job: Database
+  displayName: 'Build Database'
+  pool:
+    name: Hosted VS2017
+    demands: msbuild
+
+  steps:
+  - task: MSBuild@1
+    displayName: 'Build solution WebApp.Database.sqlproj'
+    inputs:
+      solution: WebApp.Database/WebApp.Database.sqlproj
+      msbuildArguments: '/p:OutDir=$(Build.ArtifactStagingDirectory)'
+  
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Artifact (Dacpac)'
+    inputs:
+      ArtifactName: dacpac
+
 
