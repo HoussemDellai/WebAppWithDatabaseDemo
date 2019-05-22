@@ -142,8 +142,6 @@ jobs:
     SqlServerName: '$(Prefix)-sql-$(Release.EnvironmentName)-$(Build.BuildId)'
     Prefix: 'tunis'
     Release.EnvironmentName: 'dev'
-    Parameters.WebAppKind: app
-    Parameters.WebAppName: '$(WebAppName)'
 
   steps:
   - checkout: none
@@ -185,8 +183,7 @@ jobs:
     displayName: 'Deploy Web App to Azure App Service'
     inputs:
       azureSubscription: '$(Parameters.ConnectedServiceName)'
-      appType: '$(Parameters.WebAppKind)'
-      WebAppName: '$(Parameters.WebAppName)'
+      appType: 'webApp'
+      WebAppName: '$(WebAppName)'
       TakeAppOfflineFlag: true
       JSONFiles: '**/appsettings.json'
-
