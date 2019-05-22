@@ -142,7 +142,7 @@ jobs:
     SqlServerName: '$(Prefix)-sql-$(Release.EnvironmentName)-$(Build.BuildId)'
     Prefix: 'tunis'
     Release.EnvironmentName: 'dev'
-    Parameters.WebAppKind: 'app'
+    Parameters.WebAppKind: app
     Parameters.WebAppName: '$(WebAppName)'
 
   steps:
@@ -180,11 +180,6 @@ jobs:
       csmParametersFile: '$(System.DefaultWorkingDirectory)/**/arm/WebSiteSQLDatabase.parameters.json'
       overrideParameters: '-hostingPlanName "houssemdellai-service-plan" -skuName "F1" -skuCapacity 1 -administratorLogin $(Database.Admin) -administratorLoginPassword $(Database.Password) -databaseName $(Database.Name) -collation "SQL_Latin1_General_CP1_CI_AS" -edition "Basic" -maxSizeBytes "1073741824" -requestedServiceObjectiveName "Basic" -webSiteName $(WebAppName) -sqlserverName $(SqlServerName)'
       deploymentMode: Complete
-
-
-      #Your build pipeline references an undefined variable named ‘Parameters.ConnectedServiceName’. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
-#Your build pipeline references an undefined variable named ‘Parameters.WebAppKind’. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
-#Your build pipeline references an undefined variable named ‘Parameters.WebAppName’. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
 
   - task: AzureRmWebAppDeployment@3
     displayName: 'Deploy Web App to Azure App Service'
