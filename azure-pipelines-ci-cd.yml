@@ -181,6 +181,7 @@ jobs:
 
   - task: AzureRmWebAppDeployment@3
     displayName: 'Deploy Web App to Azure App Service'
+    enabled: 'false'
     inputs:
       azureSubscription: '$(Parameters.ConnectedServiceName)'
       appType: 'webApp'
