@@ -149,6 +149,12 @@ jobs:
       artifactName: arm
       downloadPath: $(System.DefaultWorkingDirectory)
 
+  - task: CmdLine@2
+    inputs:
+      script: 'echo Write your commands here
+
+        ls'
+
   - task: AzureResourceGroupDeployment@2
     displayName: 'Validate ARM template'
     inputs:
