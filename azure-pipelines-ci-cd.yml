@@ -139,6 +139,8 @@ jobs:
     Database.Name: 'EmployeesDB'
     WebAppName: '$(Prefix)-$(Release.EnvironmentName)-$(Build.BuildId)'
     SqlServerName: '$(Prefix)-sql-$(Release.EnvironmentName)-$(Build.BuildId)'
+    Prefix: 'tunis'
+    Release.EnvironmentName: 'dev'
 
   steps:
   - task: AzureResourceGroupDeployment@2
