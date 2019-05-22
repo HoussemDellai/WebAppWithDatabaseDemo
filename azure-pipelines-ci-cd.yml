@@ -118,7 +118,7 @@ jobs:
       ArtifactName: 'UI-Test'
 
 - job: Infrastructure
-  displayName: 'Copy Infrastructure files (ARM)'
+  displayName: 'Copy Infrastructure files'
   pool:
     name: Hosted VS2017
   steps:
