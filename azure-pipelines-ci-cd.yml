@@ -169,7 +169,7 @@ jobs:
 
   - task: AzureResourceGroupDeployment@2
     displayName: 'Create Or Update Resource Group'
-    enabled: 'true'
+    enabled: 'false'
     inputs:
       azureSubscription: '$(Parameters.ConnectedServiceName)'
       resourceGroupName: '$(ResourceGroupName)'
