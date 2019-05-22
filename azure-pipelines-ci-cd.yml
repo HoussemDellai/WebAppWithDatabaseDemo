@@ -161,7 +161,7 @@ jobs:
       azureSubscription: 'Microsoft Azure Sponsorship (5a56fb34-f1c5-4669-9412-4592bb81a2cf)'
       resourceGroupName: '$(ResourceGroupName)'
       location: 'West Europe'
-      csmFile: '$(System.DefaultWorkingDirectory)/_WebAppWithDatabaseDemo-ASP.NET Core-CI/arm/WebSiteSQLDatabase.json'
+      csmFile: '$(System.DefaultWorkingDirectory)/**/arm/WebSiteSQLDatabase.json'
       csmParametersFile: '$(System.DefaultWorkingDirectory)/**/arm/WebSiteSQLDatabase.parameters.json'
       overrideParameters: '-hostingPlanName "houssemdellai-service-plan" -skuName "F1" -skuCapacity 1 -administratorLogin $(Database.Admin) -administratorLoginPassword $(Database.Password) -databaseName $(Database.Name) -collation "SQL_Latin1_General_CP1_CI_AS" -edition "Basic" -maxSizeBytes "1073741824" -requestedServiceObjectiveName "Basic" -webSiteName $(WebAppName) -sqlserverName $(SqlServerName)'
       deploymentMode: Validation
