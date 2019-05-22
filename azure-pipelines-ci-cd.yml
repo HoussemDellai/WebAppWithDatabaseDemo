@@ -143,6 +143,12 @@ jobs:
     Release.EnvironmentName: 'dev'
 
   steps:
+  - task: DownloadBuildArtifacts@0
+    displayName: 'Download Build Artifacts'
+    inputs:
+      artifactName: arm
+      downloadPath: $(System.DefaultWorkingDirectory)
+
   - task: AzureResourceGroupDeployment@2
     displayName: 'Validate ARM template'
     inputs:
