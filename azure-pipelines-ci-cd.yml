@@ -125,7 +125,7 @@ stages:
   - job: Infrastructure
     displayName: 'Copy Infrastructure files'
     pool:
-      name: Ubuntu 16.04
+      name: Hosted Ubuntu 1604
       vmImage: 'ubuntu-16.04'
     steps:
     - task: PublishBuildArtifacts@1
