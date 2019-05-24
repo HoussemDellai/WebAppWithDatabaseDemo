@@ -214,7 +214,7 @@ stages:
         WebAppName: '$(WebAppName)'
         TakeAppOfflineFlag: true
         JSONFiles: '**/appsettings.json'
-        packageForLinux: '$(System.ArtifactsDirectory)/**/drop/WebApp.zip'
+        packageForLinux: '$(System.ArtifactsDirectory)/**/WebApp.zip'
 
     - task: DownloadBuildArtifacts@0    
       displayName: 'Download DacPac'
