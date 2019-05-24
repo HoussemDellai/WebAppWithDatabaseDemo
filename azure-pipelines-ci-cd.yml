@@ -201,10 +201,10 @@ stages:
         itemPattern: '**/WebApp.zip'
         downloadPath: '$(System.DefaultWorkingDirectory)'
 
-    - task: CmdLine@2
-      inputs:
-        script: |
-          ls $(System.ArtifactsDirectory)/drop
+#    - task: CmdLine@2
+#      inputs:
+#        script: |
+#          ls $(System.ArtifactsDirectory)/drop
 
     - task: CmdLine@2
       inputs:
