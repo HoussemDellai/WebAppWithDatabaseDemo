@@ -5,9 +5,9 @@ stages:
   - job: WebApp
     displayName: 'Build Web App'
     pool:
-      name: Hosted VS2017
+      name: Hosted Windows 2019 with VS2019 
+      vmImage: 'windows-2019'
       demands: java
-
     variables:
       BuildConfiguration: release
 
@@ -79,7 +79,8 @@ stages:
   - job: Database
     displayName: 'Build Database'
     pool:
-      name: Hosted VS2017
+      name: Hosted Windows 2019 with VS2019 
+      vmImage: 'windows-2019'
       demands: msbuild
 
     steps:
@@ -97,7 +98,8 @@ stages:
   - job: Selenium
     displayName: 'Build UI Tests'
     pool:
-      name: Hosted VS2017
+      name: Hosted Windows 2019 with VS2019 
+      vmImage: 'windows-2019'
       demands: msbuild
 
     steps:
@@ -123,7 +125,8 @@ stages:
   - job: Infrastructure
     displayName: 'Copy Infrastructure files'
     pool:
-      name: Hosted VS2017
+      name: Ubuntu 16.04
+      vmImage: 'ubuntu-16.04'
     steps:
     - task: PublishBuildArtifacts@1
       displayName: 'Publish Artifact: ARM templates'
@@ -136,10 +139,9 @@ stages:
   jobs:
   - job: Dev
     displayName: 'Deploy to Dev'
-    # dependsOn: 
-    # - Infrastructure
-    # - WebApp
-
+    pool:
+      name: Hosted Windows 2019 with VS2019 
+      vmImage: 'windows-2019'
     variables:
       Parameters.ConnectedServiceName: 'Microsoft Azure Sponsorship (5a56fb34-f1c5-4669-9412-4592bb81a2cf)' # couldn't be referenced
       ResourceGroupName: '$(Prefix)-$(Release.EnvironmentName)-$(UniqueId)-RG'
