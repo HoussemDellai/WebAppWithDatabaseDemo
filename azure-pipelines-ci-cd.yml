@@ -1,7 +1,6 @@
 stages:
-- stage: Build
+- stage: Build Stage
   jobs:
-
   - job: WebApp
     displayName: 'Build Web App'
     pool:
@@ -10,7 +9,6 @@ stages:
       demands: java
     variables:
       BuildConfiguration: release
-
     steps:
     - task: DotNetCoreCLI@2
       displayName: Restore
@@ -20,7 +18,6 @@ stages:
 
     - powershell: |
        Write-Host "Hello World"
-
        $paths = Get-ChildItem -include *.csproj -Recurse
        foreach($pathobject in $paths) 
        {
@@ -77,7 +74,7 @@ stages:
         ArtifactName: drop
 
   - job: Database
-    displayName: 'Build Database'
+    displayName: 'Build Database Job'
     pool:
       name: Hosted Windows 2019 with VS2019 
       vmImage: 'windows-2019'
@@ -96,7 +93,7 @@ stages:
         ArtifactName: dacpac
 
   - job: Selenium
-    displayName: 'Build UI Tests'
+    displayName: 'Build UI Tests Job'
     pool:
       name: Hosted Windows 2019 with VS2019 
       vmImage: 'windows-2019'
@@ -123,7 +120,7 @@ stages:
         ArtifactName: ui-tests
 
   - job: Infrastructure
-    displayName: 'Copy Infrastructure files'
+    displayName: 'Publish Infra files Job'
     pool:
       name: Hosted Ubuntu 1604
       vmImage: 'ubuntu-16.04'
@@ -134,11 +131,11 @@ stages:
         PathtoPublish: AzureResourceGroupDeployment
         ArtifactName: arm
 
-- stage: Dev
-  dependsOn: Build
+- stage: Dev Stage
+  dependsOn: Build Stage
   jobs:
   - job: Dev
-    displayName: 'Deploy to Dev'
+    displayName: 'Deploy to Dev Job'
     pool:
       name: Hosted Windows 2019 with VS2019 
       vmImage: 'windows-2019'
@@ -264,19 +261,19 @@ stages:
         codeCoverageEnabled: false
 
 
-- stage: Test
+- stage: Test Stage
   jobs:
   - job:
-    displayName: 'Deploy to Test'
+    displayName: 'Deploy to Test Job'
     steps:
       - task: CmdLine@2
         inputs:
           script: 'ls'
           
-- stage: Prod
+- stage: Prod Stage
   jobs:
   - job:
-    displayName: 'Deploy to Prod'
+    displayName: 'Deploy to Prod Job'
     steps:
       - task: CmdLine@2
         inputs:
