@@ -1,5 +1,5 @@
 stages:
-- stage: Build Stage
+- stage: 'Build Stage'
   jobs:
   - job: WebApp
     displayName: 'Build Web App'
@@ -132,7 +132,7 @@ stages:
         ArtifactName: arm
 
 - stage: 'Dev Stage'
-  dependsOn: Build Stage
+  dependsOn: 'Build Stage'
   jobs:
   - job: Dev
     displayName: 'Deploy to Dev Job'
@@ -261,7 +261,7 @@ stages:
         codeCoverageEnabled: false
 
 
-- stage: Test Stage
+- stage: 'Test Stage'
   jobs:
   - job:
     displayName: 'Deploy to Test Job'
@@ -270,7 +270,7 @@ stages:
         inputs:
           script: 'ls'
           
-- stage: Prod Stage
+- stage: 'Prod Stage'
   jobs:
   - job:
     displayName: 'Deploy to Prod Job'
