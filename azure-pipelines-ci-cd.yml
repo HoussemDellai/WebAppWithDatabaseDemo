@@ -201,6 +201,10 @@ stages:
         itemPattern: '**/WebApp.zip'
         downloadPath: '$(System.ArtifactsDirectory)'
 
+    - task: CmdLine@2
+      inputs:
+        script: 'ls $(System.ArtifactsDirectory)'
+
     - task: AzureRmWebAppDeployment@3
       displayName: 'Deploy Web App to Azure App Service'
       enabled: 'true'
