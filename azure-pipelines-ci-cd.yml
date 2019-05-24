@@ -253,8 +253,13 @@ stages:
     - task: VSTest@2
       displayName: 'Selenium UI Tests'
       inputs:
+        testSelector: 'testAssemblies'
+        searchFolder: '$(System.DefaultWorkingDirectory)/ui-tests'
         runSettingsFile: '$(System.DefaultWorkingDirectory)/ui-tests/.runsettings'
         overrideTestrunParameters: '-webAppUrl $(WebAppNameUrl)'
+        testAssemblyVer2: '**\*test*.dll
+              !**\*TestAdapter.dll
+              !**\obj\**'
         runInParallel: false
         codeCoverageEnabled: false
 
