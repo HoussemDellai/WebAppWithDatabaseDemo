@@ -160,7 +160,7 @@ jobs:
     displayName: 'Validate ARM template'
     enabled: 'true'
     inputs:
-      azureSubscription: '$(Parameters.ConnectedServiceName)'
+      azureSubscription: 'Microsoft Azure Sponsorship (5a56fb34-f1c5-4669-9412-4592bb81a2cf)'
       action: 'Create Or Update Resource Group'
       resourceGroupName: '$(ResourceGroupName)'
       location: 'West Europe'
