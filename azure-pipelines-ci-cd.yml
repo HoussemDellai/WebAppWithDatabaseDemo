@@ -133,7 +133,7 @@ jobs:
   dependsOn: Infrastructure
 
   variables:
-    Parameters.ConnectedServiceName: 'Microsoft Azure Sponsorship (5a56fb34-f1c5-4669-9412-4592bb81a2cf)'
+    Parameters.ConnectedServiceName: 'Microsoft Azure Sponsorship (5a56fb34-f1c5-4669-9412-4592bb81a2cf'
     ResourceGroupName: '$(Prefix)-$(Release.EnvironmentName)-$(Build.BuildId)-RG'
     Database.Admin: 'houssem'
     Database.Password: '@Aa123456'
