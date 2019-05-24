@@ -121,7 +121,7 @@ stages:
         ArtifactName: ui-tests
 
   - job: Infrastructure
-    displayName: 'Publish Infra files Job'
+    displayName: Publish Infra files Job
     pool:
       name: Hosted Ubuntu 1604
       vmImage: 'ubuntu-16.04'
@@ -137,7 +137,7 @@ stages:
   dependsOn: Build_Stage
   jobs:
   - job: Dev
-    displayName: 'Deploy to Dev Job'
+    displayName: Deploy to Dev Job
     pool:
       name: Hosted Windows 2019 with VS2019 
       vmImage: 'windows-2019'
@@ -157,7 +157,7 @@ stages:
     steps:
     - checkout: none
     - task: DownloadBuildArtifacts@0
-      displayName: 'Download Build Artifacts'
+      displayName: Download Build Artifacts
       inputs:
         artifactName: arm
         downloadPath: $(System.DefaultWorkingDirectory)
@@ -167,7 +167,7 @@ stages:
         script: 'ls'
 
     - task: AzureResourceGroupDeployment@2
-      displayName: 'Validate ARM template'
+      displayName: Validate ARM template
       enabled: 'true'
       inputs:
         azureSubscription: 'Microsoft Azure Sponsorship (5a56fb34-f1c5-4669-9412-4592bb81a2cf)'
@@ -181,7 +181,7 @@ stages:
         deploymentMode: Validation
 
     - task: AzureResourceGroupDeployment@2
-      displayName: 'Create Or Update Resource Group'
+      displayName: Create Or Update Resource Group
       enabled: 'true'
       inputs:
         azureSubscription: 'Microsoft Azure Sponsorship (5a56fb34-f1c5-4669-9412-4592bb81a2cf)'
@@ -195,7 +195,7 @@ stages:
         deploymentMode: Complete
 
     - task: DownloadBuildArtifacts@0    
-      displayName: 'Download WebApp.zip'
+      displayName: Download WebApp.zip
       inputs:
         buildType: 'current'
         downloadType: 'single'
@@ -209,7 +209,7 @@ stages:
           ls $(System.DefaultWorkingDirectory)
 
     - task: AzureRmWebAppDeployment@3
-      displayName: 'Deploy Web App to Azure App Service'
+      displayName: Deploy Web App to Azure App Service
       enabled: 'true'
       inputs:
         azureSubscription: 'Microsoft Azure Sponsorship (5a56fb34-f1c5-4669-9412-4592bb81a2cf)'
@@ -222,7 +222,7 @@ stages:
 
 
     - task: DownloadBuildArtifacts@0    
-      displayName: 'Download DacPac'
+      displayName: Download DacPac
       inputs:
         buildType: 'current'
         downloadType: 'single'
@@ -231,7 +231,7 @@ stages:
         downloadPath: '$(System.DefaultWorkingDirectory)'
 
     - task: SqlAzureDacpacDeployment@1
-      displayName: 'Azure SQL Publish DacPac to SQL Azure'
+      displayName: Azure SQL Publish DacPac to SQL Azure
       inputs:
         azureSubscription: 'Microsoft Azure Sponsorship (5a56fb34-f1c5-4669-9412-4592bb81a2cf)'
         ServerName: '$(SqlServerName).database.windows.net,1433'
@@ -241,7 +241,7 @@ stages:
         DacpacFile: '$(System.DefaultWorkingDirectory)/dacpac/WebApp.Database.dacpac'
 
     - task: DownloadBuildArtifacts@0    
-      displayName: 'Download Selenium Tests'
+      displayName: Download Selenium Tests
       inputs:
         buildType: 'current'
         downloadType: 'single'
@@ -250,7 +250,7 @@ stages:
         downloadPath: '$(System.DefaultWorkingDirectory)'
 
     - task: VSTest@2
-      displayName: 'Selenium UI Tests'
+      displayName: Selenium UI Tests
       inputs:
         testSelector: 'testAssemblies'
         searchFolder: '$(System.DefaultWorkingDirectory)/ui-tests'
@@ -267,7 +267,7 @@ stages:
   displayName: Test Stage
   jobs:
   - job:
-    displayName: 'Deploy to Test Job'
+    displayName: Deploy to Test Job
     steps:
       - task: CmdLine@2
         inputs:
@@ -277,7 +277,7 @@ stages:
   displayName: Prod Stage
   jobs:
   - job:
-    displayName: 'Deploy to Prod Job'
+    displayName: Deploy to Prod Job
     steps:
       - task: CmdLine@2
         inputs:
