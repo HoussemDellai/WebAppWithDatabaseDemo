@@ -154,10 +154,11 @@ jobs:
 
   - task: CmdLine@2
     inputs:
-      script: 'ls'
+      script: echo $(Parameters.ConnectedServiceName)
 
   - task: AzureResourceGroupDeployment@2
     displayName: 'Validate ARM template'
+    enabled: 'false'
     inputs:
       azureSubscription: '$(Parameters.ConnectedServiceName)'
       resourceGroupName: '$(ResourceGroupName)'
