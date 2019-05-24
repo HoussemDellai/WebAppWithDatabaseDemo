@@ -267,6 +267,7 @@ stages:
 - stage: Test
   jobs:
   - job:
+    displayName: 'Deploy to Test'
     steps:
       - task: CmdLine@2
         inputs:
@@ -275,6 +276,7 @@ stages:
 - stage: Prod
   jobs:
   - job:
+    displayName: 'Deploy to Prod'
     steps:
       - task: CmdLine@2
         inputs:
