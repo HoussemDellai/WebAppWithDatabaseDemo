@@ -209,6 +209,8 @@ stages:
         WebAppName: '$(WebAppName)'
         TakeAppOfflineFlag: true
         JSONFiles: '**/appsettings.json'
+        packageForLinux: '$(System.ArtifactsDirectory)/**/WebApp.zip'
+        
 
 
 
