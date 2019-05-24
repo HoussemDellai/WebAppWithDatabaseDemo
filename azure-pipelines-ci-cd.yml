@@ -3,7 +3,7 @@ stages:
   displayName: Build Stage
   jobs:
   - job: WebApp
-    displayName: 'Build Web App'
+    displayName: Build Web App Job
     pool:
       name: Hosted Windows 2019 with VS2019 
       vmImage: 'windows-2019'
@@ -35,7 +35,7 @@ stages:
       displayName: 'PS : Add Project GUID'
 
     - task: SonarCloudPrepare@1
-      displayName: 'Prepare analysis on SonarCloud'
+      displayName: Prepare analysis on SonarCloud
       inputs:
         SonarCloud: SonarCloud
         organization: houssemdellai
@@ -63,19 +63,19 @@ stages:
         zipAfterPublish: True
 
     - task: SonarCloudAnalyze@1
-      displayName: 'Run Code Analysis'
+      displayName: Run Code Analysis
 
     - task: SonarCloudPublish@1
-      displayName: 'Publish Quality Gate Result'
+      displayName: Publish Quality Gate Result
 
     - task: PublishBuildArtifacts@1
-      displayName: 'Publish Artifact (WebApp.zip)'
+      displayName: Publish Artifact (WebApp.zip)
       inputs:
         PathtoPublish: '$(build.artifactstagingdirectory)'
         ArtifactName: drop
 
   - job: Database
-    displayName: 'Build Database Job'
+    displayName: Build Database Job
     pool:
       name: Hosted Windows 2019 with VS2019 
       vmImage: 'windows-2019'
@@ -83,18 +83,18 @@ stages:
 
     steps:
     - task: MSBuild@1
-      displayName: 'Build solution WebApp.Database.sqlproj'
+      displayName: Build solution WebApp.Database.sqlproj
       inputs:
         solution: WebApp.Database/WebApp.Database.sqlproj
         msbuildArguments: '/p:OutDir=$(Build.ArtifactStagingDirectory)'
 
     - task: PublishBuildArtifacts@1
-      displayName: 'Publish Artifact (Dacpac)'
+      displayName: Publish Artifact (Dacpac)
       inputs:
         ArtifactName: dacpac
 
   - job: Selenium
-    displayName: 'Build UI Tests Job'
+    displayName: Build UI Tests Job
     pool:
       name: Hosted Windows 2019 with VS2019 
       vmImage: 'windows-2019'
@@ -102,15 +102,15 @@ stages:
 
     steps:
     - task: NuGetToolInstaller@0
-      displayName: 'Use NuGet 4.3.0'
+      displayName: Use NuGet 4.3.0
 
     - task: NuGetCommand@2
-      displayName: 'NuGet restore'
+      displayName: NuGet restore
       inputs:
         restoreSolution: WebAppWithDatabase.sln
 
     - task: MSBuild@1
-      displayName: 'Build project SeleniumUiTests.csproj'
+      displayName: Build project SeleniumUiTests.csproj
       inputs:
         solution: SeleniumUiTests/SeleniumUiTests.csproj
         msbuildArguments: '/p:OutDir=$(Build.ArtifactStagingDirectory)'
