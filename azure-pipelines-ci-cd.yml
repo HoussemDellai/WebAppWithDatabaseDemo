@@ -158,9 +158,10 @@ jobs:
 
   - task: AzureResourceGroupDeployment@2
     displayName: 'Validate ARM template'
-    enabled: 'false'
+    enabled: 'true'
     inputs:
       azureSubscription: '$(Parameters.ConnectedServiceName)'
+      action: 'Create Or Update Resource Group'
       resourceGroupName: '$(ResourceGroupName)'
       location: 'West Europe'
       templateLocation: 'Linked artifact'
