@@ -193,6 +193,7 @@ stages:
         deploymentMode: Complete
 
     - task: DownloadBuildArtifacts@0    
+      displayName: 'Download WebApp.zip'
       inputs:
         buildType: 'current'
         downloadType: 'single'
@@ -209,7 +210,33 @@ stages:
         WebAppName: '$(WebAppName)'
         TakeAppOfflineFlag: true
         JSONFiles: '**/appsettings.json'
-        packageForLinux: '$(System.ArtifactsDirectory)/**/WebApp.zip'
+        packageForLinux: '$(System.ArtifactsDirectory)/**/drop/WebApp.zip'
+
+    - task: DownloadBuildArtifacts@0    
+      displayName: 'Download DacPac'
+      inputs:
+        buildType: 'current'
+        downloadType: 'single'
+        artifactName: 'drop'
+        itemPattern: '**/*.dacpac'
+        downloadPath: '$(System.ArtifactsDirectory)'
+
+
+
+    - task: SqlAzureDacpacDeployment@1
+      displayName: 'Azure SQL Publish DacPac to SQL Azure'
+      inputs:
+        azureSubscription: 'Microsoft Azure Sponsorship (5a56fb34-f1c5-4669-9412-4592bb81a2cf)'
+        ServerName: '$(SqlServerName).database.windows.net,1433'
+        DatabaseName: '$(Database.Name)'
+        SqlUsername: '$(Database.Admin)'
+        SqlPassword: '$(Database.Password)'
+        DacpacFile: '$(System.ArtifactsDirectory)/**/dacpac/WebApp.Database.dacpac'
+
+
+- stage: Test
+- stage: Prod
+
         
 
 
