@@ -239,7 +239,20 @@ stages:
 
 
 - stage: Test
+  jobs:
+  - job:
+    steps:
+      - task: CmdLine@2
+        inputs:
+          script: 'ls'
+          
 - stage: Prod
+  jobs:
+  - job:
+    steps:
+      - task: CmdLine@2
+        inputs:
+          script: 'ls'
 
         
 
