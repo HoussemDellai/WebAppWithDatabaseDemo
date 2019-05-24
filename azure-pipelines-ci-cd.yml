@@ -197,6 +197,7 @@ jobs:
 
 
   - task: AzureResourceGroupDeployment@2
+    enabled: 'false'
     inputs:
       azureSubscription: 'Microsoft Azure Sponsorship (5a56fb34-f1c5-4669-9412-4592bb81a2cf)'
       action: 'Create Or Update Resource Group'
