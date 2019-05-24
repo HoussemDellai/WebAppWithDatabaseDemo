@@ -1,5 +1,5 @@
 stages:
-- stage: 'Build-Stage'
+- stage: 'Build_Stage'
   jobs:
   - job: WebApp
     displayName: 'Build Web App'
