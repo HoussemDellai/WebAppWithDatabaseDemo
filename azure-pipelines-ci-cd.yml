@@ -172,9 +172,10 @@ jobs:
 
   - task: AzureResourceGroupDeployment@2
     displayName: 'Create Or Update Resource Group'
-    enabled: 'false'
+    enabled: 'true'
     inputs:
-      azureSubscription: '$(Parameters.ConnectedServiceName)'
+      azureSubscription: 'Microsoft Azure Sponsorship (5a56fb34-f1c5-4669-9412-4592bb81a2cf)'
+      action: 'Create Or Update Resource Group'
       resourceGroupName: '$(ResourceGroupName)'
       location: 'West Europe'
       templateLocation: 'Linked artifact'
@@ -185,7 +186,7 @@ jobs:
 
   - task: AzureRmWebAppDeployment@3
     displayName: 'Deploy Web App to Azure App Service'
-    enabled: 'false'
+    enabled: 'true'
     inputs:
       azureSubscription: '$(Parameters.ConnectedServiceName)'
       appType: 'webApp'
@@ -195,14 +196,3 @@ jobs:
 
 
 
-
-  - task: AzureResourceGroupDeployment@2
-    enabled: 'false'
-    inputs:
-      azureSubscription: 'Microsoft Azure Sponsorship (5a56fb34-f1c5-4669-9412-4592bb81a2cf)'
-      action: 'Create Or Update Resource Group'
-      resourceGroupName: 'tunis-dev-1227-RG'
-      location: 'West Europe'
-      templateLocation: 'Linked artifact'
-      csmFile: '$(System.DefaultWorkingDirectory)/**/arm/WebSiteSQLDatabase.json'
-      deploymentMode: 'Incremental'
