@@ -199,7 +199,7 @@ stages:
         downloadType: 'single'
         artifactName: 'drop'
         itemPattern: '**/WebApp.zip'
-        downloadPath: '$(System.ArtifactsDirectory)'
+        downloadPath: '$(System.DefaultWorkingDirectory)'
 
     - task: CmdLine@2
       inputs:
@@ -221,6 +221,8 @@ stages:
         TakeAppOfflineFlag: true
         JSONFiles: '**/appsettings.json'
         packageForLinux: '$(System.DefaultWorkingDirectory)/**/drop/WebApp.zip' #'$(System.ArtifactsDirectory)/**/drop/WebApp.zip'
+
+
 
     - task: DownloadBuildArtifacts@0    
       displayName: 'Download DacPac'
