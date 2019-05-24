@@ -131,7 +131,7 @@ stages:
         PathtoPublish: AzureResourceGroupDeployment
         ArtifactName: arm
 
-- stage: 'Deploy to Dev'
+- stage: Dev
   dependsOn: Build
   jobs:
   - job: Dev
