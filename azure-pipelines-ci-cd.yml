@@ -203,11 +203,6 @@ stages:
         itemPattern: '**/WebApp.zip'
         downloadPath: '$(System.DefaultWorkingDirectory)'
 
-#    - task: CmdLine@2
-#      inputs:
-#        script: |
-#          ls $(System.ArtifactsDirectory)/drop
-
     - task: CmdLine@2
       inputs:
         script: |
@@ -222,7 +217,7 @@ stages:
         WebAppName: '$(WebAppName)'
         TakeAppOfflineFlag: true
         JSONFiles: '**/appsettings.json'
-        packageForLinux: '$(System.DefaultWorkingDirectory)/**/drop/WebApp.zip' #'$(System.ArtifactsDirectory)/**/drop/WebApp.zip'
+        packageForLinux: '$(System.DefaultWorkingDirectory)/drop/WebApp.zip' #'$(System.ArtifactsDirectory)/**/drop/WebApp.zip'
 
 
 
@@ -231,9 +226,9 @@ stages:
       inputs:
         buildType: 'current'
         downloadType: 'single'
-        artifactName: 'drop'
+        artifactName: 'dacpac'
         itemPattern: '**/*.dacpac'
-        downloadPath: '$(System.ArtifactsDirectory)'
+        downloadPath: '$(System.DefaultWorkingDirectory)'
 
 
 
@@ -245,7 +240,7 @@ stages:
         DatabaseName: '$(Database.Name)'
         SqlUsername: '$(Database.Admin)'
         SqlPassword: '$(Database.Password)'
-        DacpacFile: '$(System.ArtifactsDirectory)/**/dacpac/WebApp.Database.dacpac'
+        DacpacFile: '$(System.DefaultWorkingDirectory)/dacpac/WebApp.Database.dacpac'
 
 
 - stage: Test
