@@ -188,7 +188,7 @@ jobs:
     displayName: 'Deploy Web App to Azure App Service'
     enabled: 'true'
     inputs:
-      azureSubscription: '$(Parameters.ConnectedServiceName)'
+      azureSubscription: $(Parameters.ConnectedServiceName)
       appType: 'webApp'
       WebAppName: '$(WebAppName)'
       TakeAppOfflineFlag: true
