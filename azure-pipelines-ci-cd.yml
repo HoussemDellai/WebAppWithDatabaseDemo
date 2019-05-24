@@ -120,7 +120,7 @@ stages:
     - task: PublishBuildArtifacts@1
       displayName: 'Publish Artifact: UI-Test'
       inputs:
-        ArtifactName: 'UI-Test'
+        ArtifactName: ui-tests
 
   - job: Infrastructure
     displayName: 'Copy Infrastructure files'
@@ -149,6 +149,7 @@ stages:
       Database.Password: '@Aa123456'
       Database.Name: 'EmployeesDB'
       WebAppName: '$(Prefix)-$(Release.EnvironmentName)-$(UniqueId)'
+      WebAppNameUrl: 'https://$(WebAppName).azurewebsites.net/'
       SqlServerName: '$(Prefix)-sql-$(Release.EnvironmentName)-$(UniqueId)'
       Prefix: 'tunis'
       Release.EnvironmentName: 'dev'
@@ -230,8 +231,6 @@ stages:
         itemPattern: '**/*.dacpac'
         downloadPath: '$(System.DefaultWorkingDirectory)'
 
-
-
     - task: SqlAzureDacpacDeployment@1
       displayName: 'Azure SQL Publish DacPac to SQL Azure'
       inputs:
@@ -241,6 +240,23 @@ stages:
         SqlUsername: '$(Database.Admin)'
         SqlPassword: '$(Database.Password)'
         DacpacFile: '$(System.DefaultWorkingDirectory)/dacpac/WebApp.Database.dacpac'
+
+    - task: DownloadBuildArtifacts@0    
+      displayName: 'Download Selenium Tests'
+      inputs:
+        buildType: 'current'
+        downloadType: 'single'
+        artifactName: 'ui-tests'
+        itemPattern: ''
+        downloadPath: '$(System.DefaultWorkingDirectory)'
+
+    - task: VSTest@2
+      displayName: 'Selenium UI Tests'
+      inputs:
+        runSettingsFile: '$(System.DefaultWorkingDirectory)/ui-tests/.runsettings'
+        overrideTestrunParameters: '-webAppUrl $(WebAppNameUrl)'
+        runInParallel: false
+        codeCoverageEnabled: false
 
 
 - stage: Test
