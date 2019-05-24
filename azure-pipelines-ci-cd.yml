@@ -205,7 +205,11 @@ stages:
       inputs:
         script: |
           ls $(System.ArtifactsDirectory)/drop
-          ls $(DefaultWorkingDirectory)
+
+    - task: CmdLine@2
+      inputs:
+        script: |
+          ls $(System.DefaultWorkingDirectory)
 
     - task: AzureRmWebAppDeployment@3
       displayName: 'Deploy Web App to Azure App Service'
@@ -216,7 +220,7 @@ stages:
         WebAppName: '$(WebAppName)'
         TakeAppOfflineFlag: true
         JSONFiles: '**/appsettings.json'
-        packageForLinux: '$(System.ArtifactsDirectory)/**/WebApp.zip'
+        packageForLinux: '$(System.DefaultWorkingDirectory)/**/drop/WebApp.zip' #'$(System.ArtifactsDirectory)/**/drop/WebApp.zip'
 
     - task: DownloadBuildArtifacts@0    
       displayName: 'Download DacPac'
