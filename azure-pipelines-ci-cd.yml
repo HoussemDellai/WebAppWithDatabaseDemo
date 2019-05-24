@@ -203,7 +203,7 @@ stages:
 
     - task: CmdLine@2
       inputs:
-        script: 'ls $(System.ArtifactsDirectory)'
+        script: 'ls $(System.ArtifactsDirectory)/drop'
 
     - task: AzureRmWebAppDeployment@3
       displayName: 'Deploy Web App to Azure App Service'
