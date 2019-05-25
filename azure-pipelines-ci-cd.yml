@@ -1,3 +1,13 @@
+trigger:
+  branches:
+    include:
+      - dev
+  paths:
+    exclude:
+      - docs/*
+      - README.md
+    
+
 stages:
 - stage: Build_Stage
   displayName: Build Stage
