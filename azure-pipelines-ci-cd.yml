@@ -1,4 +1,4 @@
-trigger:
+pr:
   branches:
     include:
       - dev
@@ -6,7 +6,16 @@ trigger:
     exclude:
       - docs/*
       - README.md
-    
+
+#trigger:
+#  branches:
+#    include:
+#      - dev
+#  paths:
+#    exclude:
+#      - docs/*
+#      - README.md
+
 
 stages:
 - stage: Build_Stage
