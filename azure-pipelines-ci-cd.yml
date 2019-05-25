@@ -16,7 +16,6 @@ pr:
 #      - docs/*
 #      - README.md
 
-
 stages:
 - stage: Build_Stage
   displayName: Build Stage
@@ -301,13 +300,3 @@ stages:
       - task: CmdLine@2
         inputs:
           script: 'ls'
-
-        
-
-
-
-
-  
-
-
-
