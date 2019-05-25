@@ -7,14 +7,16 @@ pr:
       - docs/*
       - README.md
 
-#trigger:
-#  branches:
-#    include:
-#      - dev
-#  paths:
-#    exclude:
-#      - docs/*
-#      - README.md
+trigger:
+ branches:
+   include:
+     - master
+ paths:
+   exclude:
+     - docs/*
+     - README.md
+     - azure-pipelines-ci.yml
+     - azure-pipelines-ci-cd.yml
 
 stages:
 - stage: Build_Stage
