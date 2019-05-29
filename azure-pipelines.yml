@@ -13,6 +13,7 @@ variables:
   buildConfiguration: 'Release'
   sonarCloudOrganization: 'houssemdellai'
   sonarCloudProjectKey: 'WebAppWithDatabaseDemo'
+  pathToProject: 'WebApp'
 
 steps:
 - powershell: |
@@ -28,7 +29,7 @@ steps:
        $node.AppendChild($child)
        $doc.Save($path)
    }
-  #workingDirectory: WebApp
+  workingDirectory: $(pathToProject)
   displayName: 'Create Project GUID'
 
 - task: SonarCloudPrepare@1
