@@ -41,6 +41,7 @@ steps:
 
 - script: dotnet build --configuration $(buildConfiguration)
   displayName: 'dotnet build $(buildConfiguration)'
+  continueOnError: 'true'
 
 - task: SonarCloudAnalyze@1
   displayName: 'Run Code Analysis'
