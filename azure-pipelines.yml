@@ -1,0 +1,53 @@
+# ASP.NET Core
+# Build and test ASP.NET Core projects targeting .NET Core.
+# Add steps that run tests, create a NuGet package, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  buildConfiguration: 'Release'
+  sonarCloudOrganization: 'houssemdellai'
+  sonarCloudProjectKey: 'WebAppWithDatabaseDemo'
+
+steps:
+- powershell: |
+   $paths = Get-ChildItem -include *.csproj -Recurse
+   foreach($pathobject in $paths) 
+   {
+       $path = $pathobject.fullname
+       $doc = New-Object System.Xml.XmlDocument
+       $doc.Load($path)
+       $child = $doc.CreateElement("ProjectGuid")
+       $child.InnerText = [guid]::NewGuid().ToString().ToUpper()
+       $node = $doc.SelectSingleNode("//Project/PropertyGroup")
+       $node.AppendChild($child)
+       $doc.Save($path)
+   }
+  #workingDirectory: WebApp
+  displayName: 'Create Project GUID'
+
+- task: SonarCloudPrepare@1
+  displayName: 'Prepare analysis on SonarCloud'
+  inputs:
+    SonarCloud: SonarCloud
+    organization: $(sonarCloudOrganization)
+    projectKey: $(sonarCloudProjectKey)
+
+- script: dotnet build --configuration $(buildConfiguration)
+  displayName: 'dotnet build $(buildConfiguration)'
+
+- task: SonarCloudAnalyze@1
+  displayName: 'Run Code Analysis'
+
+- task: SonarCloudPublish@1
+  displayName: 'Publish Quality Gate Result'
+
+
+
+
+  
