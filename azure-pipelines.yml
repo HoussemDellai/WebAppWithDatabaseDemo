@@ -186,6 +186,16 @@ stages:
         artifactName: arm/Terraform
         downloadPath: $(System.DefaultWorkingDirectory)
 
+    - task: Terraform@2
+      inputs:
+        TemplatePath: 'Linked artifact'
+        Arguments: 'init'
+        PlanPath: '$(System.DefaultWorkingDirectory)/**/arm/Terraform/webapp-db.tf'
+        InstallTerraform: true
+        UseAzureSub: true
+        ConnectedServiceNameSelector: 'ConnectedServiceNameARM'
+        ConnectedServiceNameARM: 'Microsoft Azure Sponsorship (5a56fb34-f1c5-4669-9412-4592bb81a2cf)'
+        ManageState: false
 
 
     - task: AzureResourceGroupDeployment@2
