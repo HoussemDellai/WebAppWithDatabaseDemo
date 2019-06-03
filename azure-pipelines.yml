@@ -149,7 +149,7 @@ stages:
       displayName: 'Publish Artifact: Terraform'
       inputs:
         PathtoPublish: Terraform
-        ArtifactName: arm/Terraform
+        ArtifactName: terraform
     - task: PublishBuildArtifacts@1
       displayName: 'Publish Artifact: ARM templates'
       inputs:
@@ -183,14 +183,13 @@ stages:
     - task: DownloadBuildArtifacts@0
       displayName: Download Build Artifacts
       inputs:
-        artifactName: arm/Terraform
+        artifactName: terraform
         downloadPath: $(System.DefaultWorkingDirectory)
 
     - task: Terraform@2
       inputs:
-        TemplatePath: 'Linked artifact'
+        TemplatePath: '$(System.DefaultWorkingDirectory)/**/terraform/webapp-db.tf'
         Arguments: 'init'
-        PlanPath: '$(System.DefaultWorkingDirectory)/**/arm/Terraform/webapp-db.tf'
         InstallTerraform: true
         UseAzureSub: true
         ConnectedServiceNameSelector: 'ConnectedServiceNameARM'
