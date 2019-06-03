@@ -186,6 +186,11 @@ stages:
         artifactName: terraform
         downloadPath: $(System.DefaultWorkingDirectory)
 
+    - task: CmdLine@2
+      inputs:
+        script: |
+          ls $(System.DefaultWorkingDirectory)
+
     - task: Terraform@2
       inputs:
         TemplatePath: '$(System.DefaultWorkingDirectory)/terraform/webapp-db.tf'
