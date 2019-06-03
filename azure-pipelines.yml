@@ -193,7 +193,7 @@ stages:
 
     - task: Terraform@2
       inputs:
-        TemplatePath: '$(System.DefaultWorkingDirectory)/terraform/webapp-db.tf'
+        TemplatePath: '$(System.DefaultWorkingDirectory)/terraform/'
         Arguments: 'init'
         InstallTerraform: true
         UseAzureSub: true
