@@ -276,7 +276,7 @@ stages:
         searchFolder: '$(System.DefaultWorkingDirectory)/ui-tests'
         runSettingsFile: '$(System.DefaultWorkingDirectory)/ui-tests/.runsettings'
         overrideTestrunParameters: '-webAppUrl $(WebAppNameUrl)'
-        testAssemblyVer2: '**\*test*.dll
+        testAssemblyVer2: '**\*Test*.dll
               !**\*TestAdapter.dll
               !**\obj\**'
         runInParallel: false
