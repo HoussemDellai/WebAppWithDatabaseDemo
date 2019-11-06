@@ -269,6 +269,7 @@ stages:
         itemPattern: ''
         downloadPath: '$(System.DefaultWorkingDirectory)'
 
+
     - task: VSTest@2
       displayName: Selenium UI Tests
       inputs:
@@ -276,9 +277,10 @@ stages:
         searchFolder: '$(System.DefaultWorkingDirectory)/ui-tests'
         runSettingsFile: '$(System.DefaultWorkingDirectory)/ui-tests/.runsettings'
         overrideTestrunParameters: '-webAppUrl $(WebAppNameUrl)'
-        testAssemblyVer2: '**\*Test*.dll
-              !**\*TestAdapter.dll
-              !**\obj\**'
+        testAssemblyVer2: |
+          **\*Test*.dll 
+          !**\*TestAdapter.dll 
+          !**\obj\**
         runInParallel: false
         codeCoverageEnabled: false
 
