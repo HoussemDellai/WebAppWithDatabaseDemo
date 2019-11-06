@@ -162,7 +162,7 @@ stages:
       name: Hosted Windows 2019 with VS2019 
       vmImage: 'windows-2019'
     variables:
-      Parameters.ConnectedServiceName: 'Visual Studio Enterprise(17b12858-3960-4e6f-a663-a06fdae23428)' # couldn't be referenced
+      Parameters.ConnectedServiceName: 'Visual Studio Enterprise' # couldn't be referenced
       ResourceGroupName: '$(Prefix)-$(Release.EnvironmentName)-$(UniqueId)-RG'
       Database.Admin: 'houssem'
       Database.Password: '@Aa123456'
@@ -190,7 +190,7 @@ stages:
       displayName: Validate ARM template
       enabled: 'true'
       inputs:
-        azureSubscription: 'Visual Studio Enterprise(17b12858-3960-4e6f-a663-a06fdae23428)'
+        azureSubscription: 'Visual Studio Enterprise'
         action: 'Create Or Update Resource Group'
         resourceGroupName: '$(ResourceGroupName)'
         location: 'West Europe'
@@ -198,13 +198,13 @@ stages:
         csmFile: '$(System.DefaultWorkingDirectory)/**/arm/WebSiteSQLDatabase.json'
         csmParametersFile: '$(System.DefaultWorkingDirectory)/**/arm/WebSiteSQLDatabase.parameters.json'
         overrideParameters: '-hostingPlanName "houssemdellai-service-plan" -skuName "F1" -skuCapacity 1 -administratorLogin $(Database.Admin) -administratorLoginPassword $(Database.Password) -databaseName $(Database.Name) -collation "SQL_Latin1_General_CP1_CI_AS" -edition "Basic" -maxSizeBytes "1073741824" -requestedServiceObjectiveName "Basic" -webSiteName $(WebAppName) -sqlserverName $(SqlServerName)'
-        deploymentMode: Validation
+        deploymentMode: 'Validation'
 
     - task: AzureResourceGroupDeployment@2
       displayName: Create Or Update Resource Group
       enabled: 'true'
       inputs:
-        azureSubscription: 'Visual Studio Enterprise(17b12858-3960-4e6f-a663-a06fdae23428)'
+        azureSubscription: 'Visual Studio Enterprise'
         action: 'Create Or Update Resource Group'
         resourceGroupName: '$(ResourceGroupName)'
         location: 'West Europe'
@@ -232,7 +232,7 @@ stages:
       displayName: Deploy Web App to Azure App Service
       enabled: 'true'
       inputs:
-        azureSubscription: 'Visual Studio Enterprise(17b12858-3960-4e6f-a663-a06fdae23428)'
+        azureSubscription: 'Visual Studio Enterprise'
         appType: 'webApp'
         WebAppName: '$(WebAppName)'
         TakeAppOfflineFlag: true
@@ -253,7 +253,7 @@ stages:
     - task: SqlAzureDacpacDeployment@1
       displayName: Azure SQL Publish DacPac to SQL Azure
       inputs:
-        azureSubscription: 'Visual Studio Enterprise(17b12858-3960-4e6f-a663-a06fdae23428)'
+        azureSubscription: 'Visual Studio Enterprise'
         ServerName: '$(SqlServerName).database.windows.net,1433'
         DatabaseName: '$(Database.Name)'
         SqlUsername: '$(Database.Admin)'
