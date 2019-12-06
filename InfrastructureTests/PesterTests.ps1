@@ -1,3 +1,7 @@
+# Install and import AzureRM modules
+Install-Module AzureRM
+Import-Module AzureRM
+
 [CmdletBinding()]
 param (
     $ResourceGroupName
