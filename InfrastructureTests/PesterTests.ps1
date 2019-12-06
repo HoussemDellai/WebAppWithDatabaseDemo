@@ -1,6 +1,8 @@
-$ResourceGroupName="myRG-rg"
+[CmdletBinding()]
+param (
+    $ResourceGroupName
+)
 
-$resourceGroup = "InfrastructureTesting" 
 Describe "Resource Group tests" -tag "AzureInfrastructure" {
     Context "Resource Groups" { 
         It "Check Main Resource Group $ResourceGroupName Exists" { 
