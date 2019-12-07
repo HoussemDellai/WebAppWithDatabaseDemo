@@ -1,11 +1,11 @@
-# Install and import AzureRM modules
-Install-Module AzureRM
-Import-Module AzureRM
-
 [CmdletBinding()]
 param (
     $ResourceGroupName
 )
+
+# Install and import AzureRM modules
+Install-Module AzureRM
+Import-Module AzureRM
 
 Describe "Resource Group tests" -tag "AzureInfrastructure" {
     Context "Resource Groups" { 
