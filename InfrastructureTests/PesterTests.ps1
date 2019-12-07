@@ -4,8 +4,8 @@ param (
 )
 
 # Install and import AzureRM modules
-Install-Module AzureRM
-Import-Module AzureRM
+#Install-Module AzureRM
+#Import-Module AzureRM
 
 Describe "Resource Group tests" -tag "AzureInfrastructure" {
     Context "Resource Groups" { 
