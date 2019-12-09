@@ -182,10 +182,6 @@ stages:
         artifactName: arm
         downloadPath: $(System.DefaultWorkingDirectory)
 
-    - task: CmdLine@2
-      inputs:
-        script: 'ls'
-
     - task: AzureResourceGroupDeployment@2
       displayName: Validate ARM template
       enabled: 'true'
