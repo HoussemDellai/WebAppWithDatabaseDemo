@@ -200,6 +200,11 @@ stages:
         overrideParameters: '-hostingPlanName "houssemdellai-service-plan" -skuName "F1" -skuCapacity 1 -administratorLogin $(Database.Admin) -administratorLoginPassword $(Database.Password) -databaseName $(Database.Name) -collation "SQL_Latin1_General_CP1_CI_AS" -edition "Basic" -maxSizeBytes "1073741824" -requestedServiceObjectiveName "Basic" -webSiteName $(WebAppName) -sqlserverName $(SqlServerName)'
         deploymentMode: 'Validation'
 
+    - task: AzSKARMTemplateChecker@4
+      inputs:
+        ARMTemplateFilePath: '$(System.DefaultWorkingDirectory)/**/arm/WebSiteSQLDatabase.json'
+        ARMTemplateParameterFilePath: '$(System.DefaultWorkingDirectory)/**/arm/WebSiteSQLDatabase.parameters.json'
+
     - task: AzureResourceGroupDeployment@2
       displayName: Create Or Update Resource Group
       enabled: 'true'
@@ -213,6 +218,14 @@ stages:
         csmParametersFile: '$(System.DefaultWorkingDirectory)/**/arm/WebSiteSQLDatabase.parameters.json'
         overrideParameters: '-hostingPlanName "houssemdellai-service-plan" -skuName "F1" -skuCapacity 1 -administratorLogin $(Database.Admin) -administratorLoginPassword $(Database.Password) -databaseName $(Database.Name) -collation "SQL_Latin1_General_CP1_CI_AS" -edition "Basic" -maxSizeBytes "1073741824" -requestedServiceObjectiveName "Basic" -webSiteName $(WebAppName) -sqlserverName $(SqlServerName)'
         deploymentMode: Complete
+
+    - task: AzSKSVTs@4
+      inputs:
+        ConnectedServiceNameARM: 'Visual Studio Enterprise'
+        GenerateMethodParameterSetSelection: 'ResourceGroupName'
+        ResourceGroupName: '$(ResourceGroupName)'
+        SubscriptionId: '17b12858-3960-4e6f-a663-a06fdae23428'
+        EnableGSSscan: true
 
     - task: DownloadBuildArtifacts@0    
       displayName: Download WebApp.zip
