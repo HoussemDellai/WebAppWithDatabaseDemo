@@ -3,7 +3,7 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "hostingPlanName": {
-      "value": "Azuredevopspoc009"
+      "value": "Azuredevopspoc09"
     },
     "administratorLogin": {
       "value": "devopsadmin"
@@ -18,7 +18,7 @@
       "value": "azuredevopspoc09-webapp"
     },
     "sqlserverName": {
-      "value": "azuredevopspoc0-sql"
+      "value": "azuredevopspoc09-sql"
     }
   }
 }
