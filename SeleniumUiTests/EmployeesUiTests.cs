@@ -15,7 +15,7 @@ namespace SeleniumUiTests
     [TestClass]
     public class EmployeesUiTests
     {
-        private string _websiteURL = "https://ignite-webapp-test-997.azurewebsites.net/";
+        private string _websiteURL = "https://azuredevopspoc09-webapp.azurewebsites.net";
         private RemoteWebDriver _browserDriver;
         public TestContext TestContext { get; set; }
 
@@ -27,9 +27,9 @@ namespace SeleniumUiTests
 
         [TestMethod]
         [TestCategory("Selenium")]
-        [DataRow("Adam John", "Marketing", "adam.john@email.com", "2423282992", "74 Avenue Tunis")]
-        [DataRow("Myriam Doe", "Sales", "myriam.doe@email.com", "2487678679", "89 Avenue Beja")]
-        [DataRow("Sam Yasser", "Engineering", "sam.yasser@email.com", "9627656254", "9 Rue Tabarka")]
+        [DataRow("bairagi rout", "Marketing", "bairagi.rout@hays.com", "2423282992", "noida")]
+        [DataRow("rupesh sharma", "Sales", "rupesh.sharma@hays.com", "2487678679", "delhi")]
+        [DataRow("dinesh yadav ", "Engineering", "dinesh.yadav@hays.com", "9627656254", "up")]
         public void CreateEmployee(string fullname, string department, string email, string phone, string address)
         {
             // Arrange
