@@ -3,10 +3,10 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "hostingPlanName": {
-      "value": "Azuredevopspoc09"
+      "value": "Azuredevopspoc-dev"
     },
     "administratorLogin": {
-      "value": "devopsadmin"
+      "value": "devopsadmin01"
     },
     "administratorLoginPassword": {
       "value": "devops@123"
@@ -15,10 +15,10 @@
       "value": "EmployeesDB"
     },
     "webSiteName": {
-      "value": "azuredevopspoc09-webapp"
+      "value": "azuredevopspoc-dev-webapp"
     },
     "sqlserverName": {
-      "value": "azuredevopspoc09-sql"
+      "value": "azuredevopspoc-dev-sql"
     }
   }
 }
