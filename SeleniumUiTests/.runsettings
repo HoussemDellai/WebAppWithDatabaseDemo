@@ -3,6 +3,6 @@
 <RunSettings>
   <!-- Parameters used by tests at runtime -->
   <TestRunParameters>
-    <Parameter name="webAppUrl" value="https://azuredevopspoc-dev-webapp.azurewebsites.net/" />
+    <Parameter name="webAppUrl" value=$(WebAppNameUrl) />
   </TestRunParameters>
 </RunSettings>
