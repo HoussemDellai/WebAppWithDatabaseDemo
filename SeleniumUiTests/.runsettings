@@ -6,3 +6,4 @@
     <Parameter name="webAppUrl" value=$(WebAppNameUrl) />
   </TestRunParameters>
 </RunSettings>
+
