@@ -36,6 +36,7 @@ Sample ASP.NET Core MVC app with database for demoing CI-CD pipelines using Azur
     <img src="http://azuredeploy.net/deploybutton.png" style="max-width:100%;">
 </a>
 
+
 </br>
       
 https://www.youtube.com/watch?v=uVne2HXkWXI&list=PLpbcUe4chE78FEvDjD9zfzSGvsdkvkkrj&index=1
