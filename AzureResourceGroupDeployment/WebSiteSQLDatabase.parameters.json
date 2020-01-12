@@ -3,7 +3,7 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "hostingPlanName": {
-      "value": "Azuredevopspoc-prod"
+      "value": "Azuredevopspoc-dev"
     },
     "administratorLogin": {
       "value": "devopsadmin01"
