@@ -36,6 +36,8 @@ stages:
       inputs:
         command: restore
         projects: '**/WebApp.csproj'
+    
+    - task: WhiteSource Bolt@20
 
     - powershell: |
        Write-Host "Hello World"
