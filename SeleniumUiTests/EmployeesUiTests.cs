@@ -27,9 +27,9 @@ namespace SeleniumUiTests
 
         [TestMethod]
         [TestCategory("Selenium")]
-        [DataRow("Adam John", "Marketing", "adam.john@email.com", "2423282992", "74 Avenue Tunis")]
-        [DataRow("Myriam Doe", "Sales", "myriam.doe@email.com", "2487678679", "89 Avenue Beja")]
-        [DataRow("Sam Yasser", "Engineering", "sam.yasser@email.com", "9627656254", "9 Rue Tabarka")]
+        [DataRow("bairagi Rout", "IT", "bairagi.rout@hays.com", "9971800425", "noida, india")]
+        [DataRow("Rupesh Sharma", "Sales", "Rupesh.Sharma@hays.com", "2487678679", "delhi , india")]
+        [DataRow("Manish Kumar", "Engineering", "Manish.kumar@hays.com", "9627656254", "9 delh, india")]
         public void CreateEmployee(string fullname, string department, string email, string phone, string address)
         {
             // Arrange
