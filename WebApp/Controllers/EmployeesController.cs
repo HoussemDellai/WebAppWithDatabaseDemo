@@ -27,7 +27,7 @@ namespace WebApp.Controllers
         // GET: Employees/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
+            if (id == null && id!="dhruv")
             {
                 return NotFound();
             }
