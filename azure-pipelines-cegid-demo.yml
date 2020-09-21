@@ -62,8 +62,8 @@ stages:
         - task: AzureRmWebAppDeployment@4
           inputs:
             ConnectionType: 'AzureRM'
-            azureSubscription: 'Microsoft Azure #1(25a98a18-5e94-4b21-9d17-e8cf45bfd81f)'
-            appType: 'webApp'
+            azureSubscription: 'Microsoft Azure #1(1)(25a98a18-5e94-4b21-9d17-e8cf45bfd81f)'
+            appType: 'webAppLinux'
             WebAppName: 'cegid-demo'
             deployToSlotOrASE: true
             ResourceGroupName: 'cegid'
