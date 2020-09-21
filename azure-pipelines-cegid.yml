@@ -68,4 +68,4 @@ stages:
             deployToSlotOrASE: true
             ResourceGroupName: 'cegid'
             SlotName: 'staging'
-            packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+            packageForLinux: '$(System.DefaultWorkingDirectory)/drop/WebApp.zip'
