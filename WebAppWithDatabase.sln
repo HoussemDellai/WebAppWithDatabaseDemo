@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27703.2018
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29911.84
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApp", "WebApp\WebApp.csproj", "{C253631B-C568-4219-AE1B-0F8FEDCFA39B}"
 EndProject
@@ -10,8 +10,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApp.UnitTest", "WebApp.UnitTest\WebApp.UnitTest.csproj", "{DD134753-D2C9-4805-B4F5-FC26BDDBB496}"
 EndProject
 Project("{151D2E53-A2C4-4D7D-83FE-D05416EBD58E}") = "AzureResourceGroupDeployment", "AzureResourceGroupDeployment\AzureResourceGroupDeployment.deployproj", "{BFCF79CD-CFBD-4E44-A79F-B5C0E95F0F49}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeleniumUiTests", "SeleniumUiTests\SeleniumUiTests.csproj", "{655A2079-A99C-4539-99CC-FD772A0B10BA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,10 +35,6 @@ Global
 		{BFCF79CD-CFBD-4E44-A79F-B5C0E95F0F49}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BFCF79CD-CFBD-4E44-A79F-B5C0E95F0F49}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BFCF79CD-CFBD-4E44-A79F-B5C0E95F0F49}.Release|Any CPU.Build.0 = Release|Any CPU
-		{655A2079-A99C-4539-99CC-FD772A0B10BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{655A2079-A99C-4539-99CC-FD772A0B10BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{655A2079-A99C-4539-99CC-FD772A0B10BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{655A2079-A99C-4539-99CC-FD772A0B10BA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

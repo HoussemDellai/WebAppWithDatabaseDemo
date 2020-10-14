@@ -1,8 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<!--Docs: https://docs.microsoft.com/fr-ca/visualstudio/test/configure-unit-tests-by-using-a-dot-runsettings-file?view=vs-2017-->
-<RunSettings>
-  <!-- Parameters used by tests at runtime -->
-  <TestRunParameters>
-    <Parameter name="webAppUrl" value="https://ignite-webapp-test-997.azurewebsites.net/" />
-  </TestRunParameters>
-</RunSettings>
