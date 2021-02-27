@@ -1,7 +1,4 @@
 # Starter pipeline
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'build'
 # Start with a minimal pipeline that you can customize to build and deploy your code.
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
@@ -15,7 +12,13 @@ pool:
 steps:
 - script: echo Hello, world!
   displayName: 'Run a one-line script'
-
+- task: AzureWebApp@1
+  inputs:
+    azureSubscription: 'Free Trial (59dd5e75-a174-4b89-932d-a8a21be46e80)'
+    appType: 'webApp'
+    appName: 'yamlfile'
+    package: '$(System.DefaultWorkingDirectory)/**/*.zip'
+    deploymentMethod: 'auto'
 - script: |
     echo Add other tasks to build, test, and deploy your project.
     echo See https://aka.ms/yaml
