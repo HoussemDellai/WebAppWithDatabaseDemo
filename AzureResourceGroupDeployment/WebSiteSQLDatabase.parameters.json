@@ -3,22 +3,22 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "hostingPlanName": {
-      "value": "houssemdellai-service-plan"
+      "value": "Azuredevopspoc-prod"
     },
     "administratorLogin": {
-      "value": "houssem"
+      "value": "devopsadmin01"
     },
     "administratorLoginPassword": {
-      "value": "@Aa123456"
+      "value": "devops@123"
     },
     "databaseName": {
       "value": "EmployeesDB"
     },
     "webSiteName": {
-      "value": "houssemdellai-webapp"
+      "value": "azuredevopspoc-prod-webapp"
     },
     "sqlserverName": {
-      "value": "houssemdellai-sql"
+      "value": "azuredevopspoc-prod-sql"
     }
   }
 }
