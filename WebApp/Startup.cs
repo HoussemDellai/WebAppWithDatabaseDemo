@@ -39,6 +39,7 @@ namespace WebApp
             }
             else
             {
+                //hi how are you
                 app.UseExceptionHandler("/Home/Error");
             }
 
