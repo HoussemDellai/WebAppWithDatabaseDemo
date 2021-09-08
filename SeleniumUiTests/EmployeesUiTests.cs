@@ -15,14 +15,15 @@ namespace SeleniumUiTests
     [TestClass]
     public class EmployeesUiTests
     {
-        private string _websiteURL = "https://ignite-webapp-test-997.azurewebsites.net/";
+        private string _websiteURL = "http://localhost:52380/";
+        //private string _websiteURL = "https://ignite-webapp-test-997.azurewebsites.net/";
         private RemoteWebDriver _browserDriver;
         public TestContext TestContext { get; set; }
 
         [TestInitialize()]
         public void PU_SearchTests_Initialize()
         {
-           _websiteURL = (string) TestContext.Properties["webAppUrl"];
+           //_websiteURL = (string) TestContext.Properties["webAppUrl"];
         }
 
         [TestMethod]

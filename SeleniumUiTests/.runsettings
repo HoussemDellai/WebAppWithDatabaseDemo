@@ -3,6 +3,7 @@
 <RunSettings>
   <!-- Parameters used by tests at runtime -->
   <TestRunParameters>
-    <Parameter name="webAppUrl" value="https://ignite-webapp-test-997.azurewebsites.net/" />
+	  <Parameter name="webAppUrl" value="http://localhost:52380/" />
+	  <!--<Parameter name="webAppUrl" value="https://ignite-webapp-test-997.azurewebsites.net/" />-->
   </TestRunParameters>
 </RunSettings>
