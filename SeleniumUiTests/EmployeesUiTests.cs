@@ -45,6 +45,7 @@ namespace SeleniumUiTests
 
             _browserDriver.FindElementById("Department").Clear();
             _browserDriver.FindElementById("Department").SendKeys(department);
+            //Selenium departement
 
             _browserDriver.FindElementById("Email").Clear();
             _browserDriver.FindElementById("Email").SendKeys(email);
