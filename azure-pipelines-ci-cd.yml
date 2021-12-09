@@ -25,7 +25,6 @@ stages:
   - job: WebApp
     displayName: Build Web App Job
     pool:
-      name: Hosted Windows 2019 with VS2019 
       vmImage: 'windows-2019'
       demands: java
     variables:
@@ -99,7 +98,6 @@ stages:
   - job: Database
     displayName: Build Database Job
     pool:
-      name: Hosted Windows 2019 with VS2019 
       vmImage: 'windows-2019'
       demands: msbuild
 
@@ -118,7 +116,6 @@ stages:
   - job: Selenium
     displayName: Build UI Tests Job
     pool:
-      name: Hosted Windows 2019 with VS2019 
       vmImage: 'windows-2019'
       demands: msbuild
 
@@ -145,8 +142,7 @@ stages:
   - job: Infrastructure
     displayName: Publish Infra files Job
     pool:
-      name: Hosted Ubuntu 1604
-      vmImage: 'ubuntu-16.04'
+      vmImage: 'ubuntu-latest'
     steps:
     - task: PublishBuildArtifacts@1
       displayName: 'Publish Artifact: ARM templates'
@@ -161,7 +157,6 @@ stages:
   - job: Dev
     displayName: Deploy to Dev Job
     pool:
-      name: Hosted Windows 2019 with VS2019 
       vmImage: 'windows-2019'
     variables:
       Parameters.ConnectedServiceName: 'Visual Studio Enterprise' # couldn't be referenced
