@@ -26,6 +26,7 @@ stages:
   - job: WebApp
     displayName: Build Web App Job
     pool:
+      name: Hosted Windows 2019 with VS2019 
       vmImage: 'windows-2019'
     variables:
       BuildConfiguration: release
@@ -35,6 +36,31 @@ stages:
       inputs:
         command: restore
         projects: '**/WebApp.csproj'
+    
+    - task: WhiteSource Bolt@20
+
+    - powershell: |
+       Write-Host "Hello World"
+       $paths = Get-ChildItem -include *.csproj -Recurse
+       foreach($pathobject in $paths) 
+       {
+           $path = $pathobject.fullname
+           $doc = New-Object System.Xml.XmlDocument
+           $doc.Load($path)
+           $child = $doc.CreateElement("ProjectGuid")
+           $child.InnerText = [guid]::NewGuid().ToString().ToUpper()
+           $node = $doc.SelectSingleNode("//Project/PropertyGroup")
+           $node.AppendChild($child)
+           $doc.Save($path)
+       }
+      workingDirectory: WebApp
+      displayName: 'PS : Add Project GUID'
+    - task: SonarCloudPrepare@1
+      displayName: Prepare analysis on SonarCloud
+      inputs:
+        SonarCloud: SonarCloud
+        organization: houssemdellai
+        projectKey: WebAppWithDatabaseDemo
 
     - task: DotNetCoreCLI@2
       displayName: Build
@@ -57,51 +83,17 @@ stages:
         arguments: '--configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory)'
         zipAfterPublish: True
 
-    - task: PublishBuildArtifacts@1
-      displayName: Publish Artifact (WebApp.zip)
-      inputs:
-        PathtoPublish: '$(build.artifactstagingdirectory)'
-        ArtifactName: drop
-
-  - job: ScanCode
-    displayName: Scan Code Job
-    dependsOn: WebApp
-    pool:
-      vmImage: 'windows-2019'
-    steps:
-    
-    - task: WhiteSource Bolt@20
-
-    - powershell: |
-       Write-Host "Hello World"
-       $paths = Get-ChildItem -include *.csproj -Recurse
-       foreach($pathobject in $paths) 
-       {
-           $path = $pathobject.fullname
-           $doc = New-Object System.Xml.XmlDocument
-           $doc.Load($path)
-           $child = $doc.CreateElement("ProjectGuid")
-           $child.InnerText = [guid]::NewGuid().ToString().ToUpper()
-           $node = $doc.SelectSingleNode("//Project/PropertyGroup")
-           $node.AppendChild($child)
-           $doc.Save($path)
-       }
-      workingDirectory: WebApp
-      displayName: 'PS : Add Project GUID'
-
-    - task: SonarCloudPrepare@1
-      displayName: Prepare analysis on SonarCloud
-      inputs:
-        SonarCloud: SonarCloud
-        organization: houssemdellai
-        projectKey: WebAppWithDatabaseDemo
-
     - task: SonarCloudAnalyze@1
       displayName: Run Code Analysis
 
     - task: SonarCloudPublish@1
       displayName: Publish Quality Gate Result
 
+    - task: PublishBuildArtifacts@1
+      displayName: Publish Artifact (WebApp.zip)
+      inputs:
+        PathtoPublish: '$(build.artifactstagingdirectory)'
+        ArtifactName: drop
   - job: Database
     displayName: Build Database Job
     pool:
