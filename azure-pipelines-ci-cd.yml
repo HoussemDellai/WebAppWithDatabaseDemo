@@ -22,11 +22,11 @@ stages:
 - stage: Build_Stage
   displayName: Build Stage
   jobs:
+
   - job: WebApp
     displayName: Build Web App Job
     pool:
       vmImage: 'windows-2019'
-      demands: java
     variables:
       BuildConfiguration: release
     steps:
@@ -35,6 +35,40 @@ stages:
       inputs:
         command: restore
         projects: '**/WebApp.csproj'
+
+    - task: DotNetCoreCLI@2
+      displayName: Build
+      inputs:
+        projects: '**/WebApp.csproj'
+        arguments: '--configuration $(BuildConfiguration)'
+
+    - task: DotNetCoreCLI@2
+      displayName: Test
+      inputs:
+        command: test
+        projects: '**/*UnitTest*.csproj'
+        arguments: '--configuration $(BuildConfiguration)'
+
+    - task: DotNetCoreCLI@2
+      displayName: Publish
+      inputs:
+        command: publish
+        publishWebProjects: True
+        arguments: '--configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory)'
+        zipAfterPublish: True
+
+    - task: PublishBuildArtifacts@1
+      displayName: Publish Artifact (WebApp.zip)
+      inputs:
+        PathtoPublish: '$(build.artifactstagingdirectory)'
+        ArtifactName: drop
+
+  - job: ScanCode
+    displayName: Scan Code Job
+    dependsOn: WebApp
+    pool:
+      vmImage: 'windows-2019'
+    steps:
     
     - task: WhiteSource Bolt@20
 
@@ -62,38 +96,11 @@ stages:
         organization: houssemdellai
         projectKey: WebAppWithDatabaseDemo
 
-    - task: DotNetCoreCLI@2
-      displayName: Build
-      inputs:
-        projects: '**/WebApp.csproj'
-        arguments: '--configuration $(BuildConfiguration)'
-
-    - task: DotNetCoreCLI@2
-      displayName: Test
-      inputs:
-        command: test
-        projects: '**/*UnitTest*.csproj'
-        arguments: '--configuration $(BuildConfiguration)'
-
-    - task: DotNetCoreCLI@2
-      displayName: Publish
-      inputs:
-        command: publish
-        publishWebProjects: True
-        arguments: '--configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory)'
-        zipAfterPublish: True
-
     - task: SonarCloudAnalyze@1
       displayName: Run Code Analysis
 
     - task: SonarCloudPublish@1
       displayName: Publish Quality Gate Result
-
-    - task: PublishBuildArtifacts@1
-      displayName: Publish Artifact (WebApp.zip)
-      inputs:
-        PathtoPublish: '$(build.artifactstagingdirectory)'
-        ArtifactName: drop
 
   - job: Database
     displayName: Build Database Job
