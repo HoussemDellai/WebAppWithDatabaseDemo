@@ -200,7 +200,7 @@ stages:
 
     - task: AzureResourceGroupDeployment@2
       displayName: Create Or Update Resource Group
-      enabled: 'false'
+      enabled: 'true'
       inputs:
         azureSubscription: 'WebAppWithDatabaseDemo_spn'
         action: 'Create Or Update Resource Group'
