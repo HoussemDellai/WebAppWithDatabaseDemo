@@ -46,9 +46,7 @@ stages:
     - task: WhiteSource Bolt@20
       enabled: ${{ parameters.runCompletePipeline }}
 
-    - task: Bash@3
-      displayName: 'PS : Add Project GUID'
-      enabled: ${{ parameters.runCompletePipeline }}
+    - task: PowerShell@2
       inputs:
         targetType: 'inline'
         script: |
