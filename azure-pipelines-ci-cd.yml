@@ -182,7 +182,7 @@ stages:
       displayName: Validate ARM template
       enabled: 'true'
       inputs:
-        azureSubscription: 'Visual Studio Enterprise'
+        azureSubscription: 'WebAppWithDatabaseDemo_spn'
         action: 'Create Or Update Resource Group'
         resourceGroupName: '$(ResourceGroupName)'
         location: 'West Europe'
@@ -201,7 +201,7 @@ stages:
       displayName: Create Or Update Resource Group
       enabled: 'true'
       inputs:
-        azureSubscription: 'Visual Studio Enterprise'
+        azureSubscription: 'WebAppWithDatabaseDemo_spn'
         action: 'Create Or Update Resource Group'
         resourceGroupName: '$(ResourceGroupName)'
         location: 'West Europe'
@@ -213,7 +213,7 @@ stages:
 
     - task: AzSKSVTs@4
       inputs:
-        ConnectedServiceNameARM: 'Visual Studio Enterprise'
+        ConnectedServiceNameARM: 'WebAppWithDatabaseDemo_spn'
         GenerateMethodParameterSetSelection: 'ResourceGroupName'
         ResourceGroupName: '$(ResourceGroupName)'
         SubscriptionId: '17b12858-3960-4e6f-a663-a06fdae23428'
@@ -237,7 +237,7 @@ stages:
       displayName: Deploy Web App to Azure App Service
       enabled: 'true'
       inputs:
-        azureSubscription: 'Visual Studio Enterprise'
+        azureSubscription: 'WebAppWithDatabaseDemo_spn'
         appType: 'webApp'
         WebAppName: '$(WebAppName)'
         TakeAppOfflineFlag: true
@@ -258,12 +258,16 @@ stages:
     - task: SqlAzureDacpacDeployment@1
       displayName: Azure SQL Publish DacPac to SQL Azure
       inputs:
-        azureSubscription: 'Visual Studio Enterprise'
+        azureSubscription: 'WebAppWithDatabaseDemo_spn'
+        AuthenticationType: 'server'
         ServerName: '$(SqlServerName).database.windows.net,1433'
         DatabaseName: '$(Database.Name)'
         SqlUsername: '$(Database.Admin)'
         SqlPassword: '$(Database.Password)'
+        deployType: 'DacpacTask'
+        DeploymentAction: 'Publish'
         DacpacFile: '$(System.DefaultWorkingDirectory)/dacpac/WebApp.Database.dacpac'
+        IpDetectionMethod: 'AutoDetect'
 
     - task: DownloadBuildArtifacts@0    
       displayName: Download Selenium Tests
