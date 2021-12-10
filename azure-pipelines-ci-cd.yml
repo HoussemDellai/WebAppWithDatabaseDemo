@@ -188,15 +188,15 @@ stages:
         resourceGroupName: '$(ResourceGroupName)'
         location: 'West Europe'
         templateLocation: 'Linked artifact'
-        csmFile: '$(System.DefaultWorkingDirectory)/**/arm/WebSiteSQLDatabase.json'
-        csmParametersFile: '$(System.DefaultWorkingDirectory)/**/arm/WebSiteSQLDatabase.parameters.json'
+        csmFile: '$(System.DefaultWorkingDirectory)/arm/WebSiteSQLDatabase.json'
+        csmParametersFile: '$(System.DefaultWorkingDirectory)/arm/WebSiteSQLDatabase.parameters.json'
         overrideParameters: '-hostingPlanName $(hostingPlanName) -skuName "F1" -skuCapacity 1 -administratorLogin $(Database.Admin) -administratorLoginPassword $(Database.Password) -databaseName $(Database.Name) -collation "SQL_Latin1_General_CP1_CI_AS" -edition "Basic" -maxSizeBytes "1073741824" -requestedServiceObjectiveName "Basic" -webSiteName $(WebAppName) -sqlserverName $(SqlServerName)'
         deploymentMode: 'Validation'
 
     - task: AzSKARMTemplateChecker@4
       inputs:
-        ARMTemplateFilePath: '$(System.DefaultWorkingDirectory)/**/arm/WebSiteSQLDatabase.json'
-        ARMTemplateParameterFilePath: '$(System.DefaultWorkingDirectory)/**/arm/WebSiteSQLDatabase.parameters.json'
+        ARMTemplateFilePath: '$(System.DefaultWorkingDirectory)/arm/WebSiteSQLDatabase.json'
+        ARMTemplateParameterFilePath: '$(System.DefaultWorkingDirectory)/arm/WebSiteSQLDatabase.parameters.json'
 
     - task: AzureResourceGroupDeployment@2
       displayName: Create Or Update Resource Group
