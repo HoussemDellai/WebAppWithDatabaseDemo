@@ -247,6 +247,7 @@ stages:
     - task: AzSKSVTs@4
       displayName: Scan Azure Resources
       enabled: ${{ parameters.runCompletePipeline }}
+      continueOnError: true
       inputs:
         ConnectedServiceNameARM: 'WebAppWithDatabaseDemo_spn'
         GenerateMethodParameterSetSelection: 'ResourceGroupName'
@@ -268,11 +269,11 @@ stages:
       displayName: Deploy Web App to Azure App Service
       inputs:
         azureSubscription: 'WebAppWithDatabaseDemo_spn'
-        appType: 'webApp'
+        appType: 'app'
         WebAppName: '$(WebAppName)'
+        Package: '$(System.DefaultWorkingDirectory)/**/*.zip'
         TakeAppOfflineFlag: true
         JSONFiles: '**/appsettings.json'
-        packageForLinux: '$(System.DefaultWorkingDirectory)/drop/WebApp.zip' #'$(System.ArtifactsDirectory)/**/drop/WebApp.zip'
 
     - task: DownloadBuildArtifacts@0    
       displayName: Download DacPac
