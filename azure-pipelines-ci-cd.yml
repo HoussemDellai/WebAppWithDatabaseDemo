@@ -271,7 +271,7 @@ stages:
         azureSubscription: 'WebAppWithDatabaseDemo_spn'
         appType: 'app'
         WebAppName: '$(WebAppName)'
-        Package: '$(System.DefaultWorkingDirectory)/**/*.zip'
+        Package: '$(System.DefaultWorkingDirectory)/drop/WebApp.zip'
         TakeAppOfflineFlag: true
         JSONFiles: '**/appsettings.json'
 
