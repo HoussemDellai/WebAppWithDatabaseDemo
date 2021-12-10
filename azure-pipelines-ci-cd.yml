@@ -231,6 +231,9 @@ stages:
         ARMTemplateFilePath: '$(System.DefaultWorkingDirectory)/arm/WebSiteSQLDatabase.json'
         ARMTemplateParameterFilePath: '$(System.DefaultWorkingDirectory)/arm/WebSiteSQLDatabase.parameters.json'
 
+# scan ARM template using TTK
+
+# What-IF: https://4bes.nl/2021/03/06/test-arm-templates-with-what-if/
     - task: AzureResourceGroupDeployment@2
       displayName: Create Or Update Resource Group
       inputs:
