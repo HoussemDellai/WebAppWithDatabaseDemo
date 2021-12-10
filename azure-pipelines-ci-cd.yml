@@ -18,6 +18,12 @@ trigger:
      - azure-pipelines-ci.yml
      - azure-pipelines-ci-cd.yml
 
+parameters:
+- name: runCompletePipeline
+  displayName: Run All Tasks ?
+  type: boolean
+  default: false
+
 stages:
 - stage: Build_Stage
   displayName: Build Stage
@@ -38,25 +44,47 @@ stages:
         projects: '**/WebApp.csproj'
     
     - task: WhiteSource Bolt@20
+      enabled: ${{ runCompletePipeline }}
 
-    - powershell: |
-       Write-Host "Hello World"
-       $paths = Get-ChildItem -include *.csproj -Recurse
-       foreach($pathobject in $paths) 
-       {
-           $path = $pathobject.fullname
-           $doc = New-Object System.Xml.XmlDocument
-           $doc.Load($path)
-           $child = $doc.CreateElement("ProjectGuid")
-           $child.InnerText = [guid]::NewGuid().ToString().ToUpper()
-           $node = $doc.SelectSingleNode("//Project/PropertyGroup")
-           $node.AppendChild($child)
-           $doc.Save($path)
-       }
-      workingDirectory: WebApp
+    - task: Bash@3
       displayName: 'PS : Add Project GUID'
+      enabled: ${{ runCompletePipeline }}
+      inputs:
+        targetType: 'inline'
+        script: |
+          $paths = Get-ChildItem -include *.csproj -Recurse
+                foreach($pathobject in $paths) 
+                {
+                    $path = $pathobject.fullname
+                    $doc = New-Object System.Xml.XmlDocument
+                    $doc.Load($path)
+                    $child = $doc.CreateElement("ProjectGuid")
+                    $child.InnerText = [guid]::NewGuid().ToString().ToUpper()
+                    $node = $doc.SelectSingleNode("//Project/PropertyGroup")
+                    $node.AppendChild($child)
+                    $doc.Save($path)
+                }
+        workingDirectory: 'WebApp'
+
+    # - powershell: |
+    #    Write-Host "Hello World"
+    #    $paths = Get-ChildItem -include *.csproj -Recurse
+    #    foreach($pathobject in $paths) 
+    #    {
+    #        $path = $pathobject.fullname
+    #        $doc = New-Object System.Xml.XmlDocument
+    #        $doc.Load($path)
+    #        $child = $doc.CreateElement("ProjectGuid")
+    #        $child.InnerText = [guid]::NewGuid().ToString().ToUpper()
+    #        $node = $doc.SelectSingleNode("//Project/PropertyGroup")
+    #        $node.AppendChild($child)
+    #        $doc.Save($path)
+    #    }
+    #   workingDirectory: WebApp
+    #   displayName: 'PS : Add Project GUID'
     - task: SonarCloudPrepare@1
       displayName: Prepare analysis on SonarCloud
+      enabled: ${{ runCompletePipeline }}
       inputs:
         SonarCloud: SonarCloud
         organization: houssemdellai
@@ -70,6 +98,7 @@ stages:
 
     - task: DotNetCoreCLI@2
       displayName: Test
+      enabled: ${{ runCompletePipeline }}
       inputs:
         command: test
         projects: '**/*UnitTest*.csproj'
@@ -85,22 +114,25 @@ stages:
 
     - task: SonarCloudAnalyze@1
       displayName: Run Code Analysis
+      enabled: ${{ runCompletePipeline }}
 
     - task: SonarCloudPublish@1
       displayName: Publish Quality Gate Result
+      enabled: ${{ runCompletePipeline }}
 
     - task: PublishBuildArtifacts@1
       displayName: Publish Artifact (WebApp.zip)
       inputs:
         PathtoPublish: '$(build.artifactstagingdirectory)'
         ArtifactName: drop
+
   - job: Database
     displayName: Build Database Job
     pool:
       vmImage: 'windows-2019'
       demands: msbuild
-
     steps:
+
     - task: MSBuild@1
       displayName: Build solution WebApp.Database.sqlproj
       inputs:
@@ -181,7 +213,7 @@ stages:
 
     - task: AzureResourceGroupDeployment@2
       displayName: Validate ARM template
-      enabled: 'true'
+      enabled: ${{ runCompletePipeline }}
       inputs:
         azureSubscription: 'WebAppWithDatabaseDemo_spn'
         action: 'Create Or Update Resource Group'
@@ -194,13 +226,15 @@ stages:
         deploymentMode: 'Validation'
 
     - task: AzSKARMTemplateChecker@4
+      displayName: Scan ARM template
+      enabled: ${{ runCompletePipeline }}
+      continueOnError: true
       inputs:
         ARMTemplateFilePath: '$(System.DefaultWorkingDirectory)/arm/WebSiteSQLDatabase.json'
         ARMTemplateParameterFilePath: '$(System.DefaultWorkingDirectory)/arm/WebSiteSQLDatabase.parameters.json'
 
     - task: AzureResourceGroupDeployment@2
       displayName: Create Or Update Resource Group
-      enabled: 'true'
       inputs:
         azureSubscription: 'WebAppWithDatabaseDemo_spn'
         action: 'Create Or Update Resource Group'
@@ -213,13 +247,16 @@ stages:
         deploymentMode: Complete
 
     - task: AzSKSVTs@4
+      displayName: Scan Azure Resources
+      enabled: ${{ runCompletePipeline }}
       inputs:
         ConnectedServiceNameARM: 'WebAppWithDatabaseDemo_spn'
         GenerateMethodParameterSetSelection: 'ResourceGroupName'
         ResourceGroupName: '$(ResourceGroupName)'
-        SubscriptionId: '17b12858-3960-4e6f-a663-a06fdae23428'
+        SubscriptionId: '4b72ed90-7ca3-4e76-8d0f-31a2c0bee7a3'
         EnableGSSscan: true
 
+# new JOB: Deploy App & Database
     - task: DownloadBuildArtifacts@0    
       displayName: Download WebApp.zip
       inputs:
@@ -231,7 +268,6 @@ stages:
 
     - task: AzureRmWebAppDeployment@3
       displayName: Deploy Web App to Azure App Service
-      enabled: 'true'
       inputs:
         azureSubscription: 'WebAppWithDatabaseDemo_spn'
         appType: 'webApp'
@@ -262,7 +298,7 @@ stages:
         DeploymentAction: 'Publish'
         DacpacFile: '$(System.DefaultWorkingDirectory)/dacpac/WebApp.Database.dacpac'
         IpDetectionMethod: 'AutoDetect'
-
+# new JOB: Selenium
     - task: DownloadBuildArtifacts@0    
       displayName: Download Selenium Tests
       inputs:
@@ -271,7 +307,6 @@ stages:
         artifactName: 'ui-tests'
         itemPattern: ''
         downloadPath: '$(System.DefaultWorkingDirectory)'
-
 
     - task: VSTest@2
       displayName: Selenium UI Tests
