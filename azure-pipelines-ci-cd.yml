@@ -22,7 +22,7 @@ parameters:
 - name: runCompletePipeline
   displayName: Run All Tasks ?
   type: boolean
-  default: false
+  default: true
 
 stages:
 - stage: Build_Stage
@@ -44,11 +44,11 @@ stages:
         projects: '**/WebApp.csproj'
     
     - task: WhiteSource Bolt@20
-      enabled: ${{ runCompletePipeline }}
+      enabled: ${{ parameters.runCompletePipeline }}
 
     - task: Bash@3
       displayName: 'PS : Add Project GUID'
-      enabled: ${{ runCompletePipeline }}
+      enabled: ${{ parameters.runCompletePipeline }}
       inputs:
         targetType: 'inline'
         script: |
@@ -84,7 +84,7 @@ stages:
     #   displayName: 'PS : Add Project GUID'
     - task: SonarCloudPrepare@1
       displayName: Prepare analysis on SonarCloud
-      enabled: ${{ runCompletePipeline }}
+      enabled: ${{ parameters.runCompletePipeline }}
       inputs:
         SonarCloud: SonarCloud
         organization: houssemdellai
@@ -98,7 +98,7 @@ stages:
 
     - task: DotNetCoreCLI@2
       displayName: Test
-      enabled: ${{ runCompletePipeline }}
+      enabled: ${{ parameters.runCompletePipeline }}
       inputs:
         command: test
         projects: '**/*UnitTest*.csproj'
@@ -114,11 +114,11 @@ stages:
 
     - task: SonarCloudAnalyze@1
       displayName: Run Code Analysis
-      enabled: ${{ runCompletePipeline }}
+      enabled: ${{ parameters.runCompletePipeline }}
 
     - task: SonarCloudPublish@1
       displayName: Publish Quality Gate Result
-      enabled: ${{ runCompletePipeline }}
+      enabled: ${{ parameters.runCompletePipeline }}
 
     - task: PublishBuildArtifacts@1
       displayName: Publish Artifact (WebApp.zip)
@@ -213,7 +213,7 @@ stages:
 
     - task: AzureResourceGroupDeployment@2
       displayName: Validate ARM template
-      enabled: ${{ runCompletePipeline }}
+      enabled: ${{ parameters.runCompletePipeline }}
       inputs:
         azureSubscription: 'WebAppWithDatabaseDemo_spn'
         action: 'Create Or Update Resource Group'
@@ -227,7 +227,7 @@ stages:
 
     - task: AzSKARMTemplateChecker@4
       displayName: Scan ARM template
-      enabled: ${{ runCompletePipeline }}
+      enabled: ${{ parameters.runCompletePipeline }}
       continueOnError: true
       inputs:
         ARMTemplateFilePath: '$(System.DefaultWorkingDirectory)/arm/WebSiteSQLDatabase.json'
@@ -248,7 +248,7 @@ stages:
 
     - task: AzSKSVTs@4
       displayName: Scan Azure Resources
-      enabled: ${{ runCompletePipeline }}
+      enabled: ${{ parameters.runCompletePipeline }}
       inputs:
         ConnectedServiceNameARM: 'WebAppWithDatabaseDemo_spn'
         GenerateMethodParameterSetSelection: 'ResourceGroupName'
