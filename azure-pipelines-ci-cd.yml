@@ -203,7 +203,7 @@ stages:
       displayName: Validate ARM templates
       enabled: ${{ parameters.runCompletePipeline }}
       inputs:
-        azureSubscription: $(azureSubscription) # 'WebAppWithDatabaseDemo_spn'
+        # azureSubscription: $(azureSubscription) # 'WebAppWithDatabaseDemo_spn'
         action: 'Create Or Update Resource Group'
         resourceGroupName: '$(ResourceGroupName)'
         location: 'West Europe'
@@ -230,7 +230,7 @@ stages:
     - task: AzureResourceGroupDeployment@2
       displayName: Deploy ARM templates
       inputs:
-        azureSubscription: $(azureSubscription) # 'WebAppWithDatabaseDemo_spn'
+        azureSubscription: 'WebAppWithDatabaseDemo_spn'
         action: 'Create Or Update Resource Group'
         resourceGroupName: '$(ResourceGroupName)'
         location: 'West Europe'
