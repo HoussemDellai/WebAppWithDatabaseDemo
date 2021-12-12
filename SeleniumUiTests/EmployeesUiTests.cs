@@ -1,14 +1,9 @@
 ﻿
 using System;
-using System.Drawing.Imaging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Firefox;
-using OpenQA.Selenium.IE;
-using OpenQA.Selenium.Remote;
-using OpenQA.Selenium.PhantomJS;
 
 namespace SeleniumUiTests
 {
@@ -17,13 +12,13 @@ namespace SeleniumUiTests
     {
         private string _websiteURL = "http://localhost:52380/";
         //private string _websiteURL = "https://ignite-webapp-test-997.azurewebsites.net/";
-        private RemoteWebDriver _browserDriver;
+        private WebDriver _browserDriver;
         public TestContext TestContext { get; set; }
 
         [TestInitialize()]
         public void PU_SearchTests_Initialize()
         {
-           _websiteURL = (string) TestContext.Properties["webAppUrl"];
+            _websiteURL = (string) TestContext.Properties["webAppUrl"];
         }
 
         [TestMethod]
@@ -36,28 +31,28 @@ namespace SeleniumUiTests
             // Arrange
             _browserDriver = new ChromeDriver();
             _browserDriver.Manage().Window.Maximize();
-            _browserDriver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(20));
+            _browserDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(20);
             _browserDriver.Navigate().GoToUrl(_websiteURL + "Employees/Create");
-            _browserDriver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(20));
+            _browserDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(20);
 
-            _browserDriver.FindElementById("Fullname").Clear();
-            _browserDriver.FindElementById("Fullname").SendKeys(fullname);
+            _browserDriver.FindElement(By.Id("Fullname")).Clear();
+            _browserDriver.FindElement(By.Id("Fullname")).SendKeys(fullname);
 
-            _browserDriver.FindElementById("Department").Clear();
-            _browserDriver.FindElementById("Department").SendKeys(department);
+            _browserDriver.FindElement(By.Id("Department")).Clear();
+            _browserDriver.FindElement(By.Id("Department")).SendKeys(department);
 
-            _browserDriver.FindElementById("Email").Clear();
-            _browserDriver.FindElementById("Email").SendKeys(email);
+            _browserDriver.FindElement(By.Id("Email")).Clear();
+            _browserDriver.FindElement(By.Id("Email")).SendKeys(email);
 
-            _browserDriver.FindElementById("Phone").Clear();
-            _browserDriver.FindElementById("Phone").SendKeys(phone);
+            _browserDriver.FindElement(By.Id("Phone")).Clear();
+            _browserDriver.FindElement(By.Id("Phone")).SendKeys(phone);
 
-            _browserDriver.FindElementById("Address").Clear();
-            _browserDriver.FindElementById("Address").SendKeys(address);
+            _browserDriver.FindElement(By.Id("Address")).Clear();
+            _browserDriver.FindElement(By.Id("Address")).SendKeys(address);
 
             var screenshot = _browserDriver.GetScreenshot();
             var fileName = $"{fullname}.jpg";
-            screenshot.SaveAsFile(fileName, ImageFormat.Jpeg);
+            screenshot.SaveAsFile(fileName, ScreenshotImageFormat.Jpeg);
             TestContext.AddResultFile(fileName);
             
             // Act
