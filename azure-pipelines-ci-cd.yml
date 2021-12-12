@@ -170,26 +170,27 @@ stages:
 - stage: Dev_Stage
   displayName: Create & Deploy to Dev
   dependsOn: Build_Stage
+  variables:
+    Parameters.ConnectedServiceName: 'Visual Studio Enterprise' # couldn't be referenced
+    ResourceGroupName: '$(Prefix)-$(Release.EnvironmentName)-$(UniqueId)-RG'
+    Database.Admin: 'houssem'
+    Database.Password: '@Aa123456' # to be secured in Key Vault
+    Database.Name: 'EmployeesDB'
+    WebAppName: '$(Prefix)-$(Release.EnvironmentName)-$(UniqueId)'
+    WebAppNameUrl: 'https://$(WebAppName).azurewebsites.net/'
+    SqlServerName: '$(Prefix)-sql-$(Release.EnvironmentName)-$(UniqueId)'
+    Prefix: 'tunis'
+    Release.EnvironmentName: 'dev'
+    UniqueId: '1280' #'$(Build.BuildId)'
+    hostingPlanName: '$(Prefix)-service-plan'
+
   jobs:
-  - job: Dev
-    displayName: Deploy to Dev
+  - job: Create_DEV
+    displayName: Create DEV
     pool:
       vmImage: 'windows-2019'
-    variables:
-      Parameters.ConnectedServiceName: 'Visual Studio Enterprise' # couldn't be referenced
-      ResourceGroupName: '$(Prefix)-$(Release.EnvironmentName)-$(UniqueId)-RG'
-      Database.Admin: 'houssem'
-      Database.Password: '@Aa123456' # to be secured in Key Vault
-      Database.Name: 'EmployeesDB'
-      WebAppName: '$(Prefix)-$(Release.EnvironmentName)-$(UniqueId)'
-      WebAppNameUrl: 'https://$(WebAppName).azurewebsites.net/'
-      SqlServerName: '$(Prefix)-sql-$(Release.EnvironmentName)-$(UniqueId)'
-      Prefix: 'tunis'
-      Release.EnvironmentName: 'dev'
-      UniqueId: '1280' #'$(Build.BuildId)'
-      hostingPlanName: '$(Prefix)-service-plan'
-
     steps:
+
     - checkout: none
     - task: DownloadBuildArtifacts@0
       displayName: Download ARM templates
@@ -249,6 +250,14 @@ stages:
         SubscriptionId: '4b72ed90-7ca3-4e76-8d0f-31a2c0bee7a3'
         EnableGSSscan: true
 
+  - job: Deploy_DEV
+    displayName: Deploy Apps to DEV
+    dependsOn: Create_DEV
+    pool:
+      vmImage: 'windows-2019'
+    steps:
+
+    - checkout: none
 # new JOB: Deploy App & Database
     - task: DownloadBuildArtifacts@0    
       displayName: Download WebApp.zip
@@ -292,6 +301,14 @@ stages:
         DacpacFile: '$(System.DefaultWorkingDirectory)/dacpac/WebApp.Database.dacpac'
         IpDetectionMethod: 'AutoDetect'
 # new JOB: Selenium
+  - job: Test_DEV
+    displayName: Run Selenium tests in DEV
+    dependsOn: Deploy_DEV
+    pool:
+      vmImage: 'windows-2019'
+    steps:
+
+    - checkout: none
     - task: DownloadBuildArtifacts@0    
       displayName: Download Selenium Tests
       inputs:
