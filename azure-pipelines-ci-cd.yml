@@ -26,11 +26,11 @@ parameters:
 
 stages:
 - stage: Build_Stage
-  displayName: Build Stage
+  displayName: Build Apps
   jobs:
 
   - job: WebApp
-    displayName: Build Web App Job
+    displayName: Build Web App
     pool:
       name: Hosted Windows 2019 with VS2019 
       vmImage: 'windows-2019'
@@ -113,7 +113,7 @@ stages:
         ArtifactName: drop
 
   - job: Database
-    displayName: Build Database Job
+    displayName: Build Database
     pool:
       vmImage: 'windows-2019'
       demands: msbuild
@@ -131,7 +131,7 @@ stages:
         ArtifactName: dacpac
 
   - job: Selenium
-    displayName: Build UI Tests Job
+    displayName: Build UI Tests
     pool:
       vmImage: 'windows-2019'
       demands: msbuild
@@ -157,7 +157,7 @@ stages:
         ArtifactName: ui-tests
 
   - job: Infrastructure
-    displayName: Publish Infra files Job
+    displayName: Publish Infra files
     pool:
       vmImage: 'ubuntu-latest'
     steps:
@@ -168,18 +168,18 @@ stages:
         ArtifactName: arm
 
 - stage: Dev_Stage
-  displayName: Dev Stage
+  displayName: Create & Deploy to Dev
   dependsOn: Build_Stage
   jobs:
   - job: Dev
-    displayName: Deploy to Dev Job
+    displayName: Deploy to Dev
     pool:
       vmImage: 'windows-2019'
     variables:
       Parameters.ConnectedServiceName: 'Visual Studio Enterprise' # couldn't be referenced
       ResourceGroupName: '$(Prefix)-$(Release.EnvironmentName)-$(UniqueId)-RG'
       Database.Admin: 'houssem'
-      Database.Password: '@Aa123456'
+      Database.Password: '@Aa123456' # to be secured in Key Vault
       Database.Name: 'EmployeesDB'
       WebAppName: '$(Prefix)-$(Release.EnvironmentName)-$(UniqueId)'
       WebAppNameUrl: 'https://$(WebAppName).azurewebsites.net/'
