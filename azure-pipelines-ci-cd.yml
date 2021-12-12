@@ -234,6 +234,9 @@ stages:
 # scan ARM template using TTK
 
 # What-IF: https://4bes.nl/2021/03/06/test-arm-templates-with-what-if/
+
+# replace AzureResourceGroupDeployment@2 with AzureResourceManagerTemplateDeploymentV3
+# https://github.com/microsoft/azure-pipelines-tasks/tree/master/Tasks/AzureResourceManagerTemplateDeploymentV3
     - task: AzureResourceGroupDeployment@2
       displayName: Create Or Update Resource Group
       inputs:
@@ -322,7 +325,7 @@ stages:
           !**\*TestAdapter.dll 
           !**\obj\**
         runInParallel: false
-        codeCoverageEnabled: false
+        codeCoverageEnabled: true
 
 
 - stage: Test_Stage
