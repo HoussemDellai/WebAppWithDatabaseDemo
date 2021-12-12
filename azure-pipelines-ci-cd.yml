@@ -37,16 +37,20 @@ stages:
     variables:
       BuildConfiguration: release
     steps:
+
     - task: DotNetCoreCLI@2
-      displayName: Restore
+      displayName: Restore Nuget Packages
       inputs:
         command: restore
         projects: '**/WebApp.csproj'
     
     - task: WhiteSource Bolt@20
+      displayName: Scan Nuget Packages
       enabled: ${{ parameters.runCompletePipeline }}
 
     - task: PowerShell@2
+      displayName: Prepare for Sonar Cloud
+      enabled: ${{ parameters.runCompletePipeline }}
       inputs:
         targetType: 'inline'
         script: |
@@ -64,22 +68,6 @@ stages:
                 }
         workingDirectory: 'WebApp'
 
-    # - powershell: |
-    #    Write-Host "Hello World"
-    #    $paths = Get-ChildItem -include *.csproj -Recurse
-    #    foreach($pathobject in $paths) 
-    #    {
-    #        $path = $pathobject.fullname
-    #        $doc = New-Object System.Xml.XmlDocument
-    #        $doc.Load($path)
-    #        $child = $doc.CreateElement("ProjectGuid")
-    #        $child.InnerText = [guid]::NewGuid().ToString().ToUpper()
-    #        $node = $doc.SelectSingleNode("//Project/PropertyGroup")
-    #        $node.AppendChild($child)
-    #        $doc.Save($path)
-    #    }
-    #   workingDirectory: WebApp
-    #   displayName: 'PS : Add Project GUID'
     - task: SonarCloudPrepare@1
       displayName: Prepare analysis on SonarCloud
       enabled: ${{ parameters.runCompletePipeline }}
@@ -89,13 +77,13 @@ stages:
         projectKey: WebAppWithDatabaseDemo
 
     - task: DotNetCoreCLI@2
-      displayName: Build
+      displayName: Build WebApp
       inputs:
         projects: '**/WebApp.csproj'
         arguments: '--configuration $(BuildConfiguration)'
 
     - task: DotNetCoreCLI@2
-      displayName: Test
+      displayName: Run Unit Tests
       enabled: ${{ parameters.runCompletePipeline }}
       inputs:
         command: test
@@ -103,7 +91,7 @@ stages:
         arguments: '--configuration $(BuildConfiguration)'
 
     - task: DotNetCoreCLI@2
-      displayName: Publish
+      displayName: Create WebApp.zip
       inputs:
         command: publish
         publishWebProjects: True
@@ -132,7 +120,7 @@ stages:
     steps:
 
     - task: MSBuild@1
-      displayName: Build solution WebApp.Database.sqlproj
+      displayName: Build WebApp.Database.sqlproj
       inputs:
         solution: WebApp.Database/WebApp.Database.sqlproj
         msbuildArguments: '/p:OutDir=$(Build.ArtifactStagingDirectory)'
@@ -153,12 +141,12 @@ stages:
       displayName: Use NuGet 4.3.0
 
     - task: NuGetCommand@2
-      displayName: NuGet restore
+      displayName: Restoore NuGet Packages
       inputs:
         restoreSolution: WebAppWithDatabase.sln
 
     - task: MSBuild@1
-      displayName: Build project SeleniumUiTests.csproj
+      displayName: Build SeleniumUiTests.csproj
       inputs:
         solution: SeleniumUiTests/SeleniumUiTests.csproj
         msbuildArguments: '/p:OutDir=$(Build.ArtifactStagingDirectory)'
@@ -204,13 +192,13 @@ stages:
     steps:
     - checkout: none
     - task: DownloadBuildArtifacts@0
-      displayName: Download Build Artifacts
+      displayName: Download ARM templates
       inputs:
         artifactName: arm
         downloadPath: $(System.DefaultWorkingDirectory)
 
     - task: AzureResourceGroupDeployment@2
-      displayName: Validate ARM template
+      displayName: Validate ARM templates
       enabled: ${{ parameters.runCompletePipeline }}
       inputs:
         azureSubscription: 'WebAppWithDatabaseDemo_spn'
@@ -224,7 +212,7 @@ stages:
         deploymentMode: 'Validation'
 
     - task: AzSKARMTemplateChecker@4
-      displayName: Scan ARM template
+      displayName: Scan ARM templates
       enabled: ${{ parameters.runCompletePipeline }}
       continueOnError: true
       inputs:
@@ -238,7 +226,7 @@ stages:
 # replace AzureResourceGroupDeployment@2 with AzureResourceManagerTemplateDeploymentV3
 # https://github.com/microsoft/azure-pipelines-tasks/tree/master/Tasks/AzureResourceManagerTemplateDeploymentV3
     - task: AzureResourceGroupDeployment@2
-      displayName: Create Or Update Resource Group
+      displayName: Deploy ARM templates
       inputs:
         azureSubscription: 'WebAppWithDatabaseDemo_spn'
         action: 'Create Or Update Resource Group'
@@ -272,7 +260,7 @@ stages:
         downloadPath: '$(System.DefaultWorkingDirectory)'
 
     - task: AzureRmWebAppDeployment@3
-      displayName: Deploy Web App to Azure App Service
+      displayName: Deploy WebApp to Azure
       inputs:
         azureSubscription: 'WebAppWithDatabaseDemo_spn'
         appType: 'app'
@@ -291,7 +279,7 @@ stages:
         downloadPath: '$(System.DefaultWorkingDirectory)'
 
     - task: SqlAzureDacpacDeployment@1
-      displayName: Azure SQL Publish DacPac to SQL Azure
+      displayName: Deploy DacPac to SQL Azure
       inputs:
         azureSubscription: 'WebAppWithDatabaseDemo_spn'
         AuthenticationType: 'server'
@@ -314,7 +302,7 @@ stages:
         downloadPath: '$(System.DefaultWorkingDirectory)'
 
     - task: VSTest@2
-      displayName: Selenium UI Tests
+      displayName: Run Selenium UI Tests
       inputs:
         testSelector: 'testAssemblies'
         searchFolder: '$(System.DefaultWorkingDirectory)/ui-tests'
