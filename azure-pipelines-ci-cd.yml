@@ -161,6 +161,7 @@ stages:
     pool:
       vmImage: 'ubuntu-latest'
     steps:
+    
     - task: PublishBuildArtifacts@1
       displayName: 'Publish Artifact: ARM templates'
       inputs:
@@ -171,7 +172,7 @@ stages:
   displayName: Create & Deploy to Dev
   dependsOn: Build_Stage
   variables:
-    Parameters.ConnectedServiceName: 'Visual Studio Enterprise' # couldn't be referenced
+    azureSubscription: 'WebAppWithDatabaseDemo_spn' # couldn't be referenced
     ResourceGroupName: '$(Prefix)-$(Release.EnvironmentName)-$(UniqueId)-RG'
     Database.Admin: 'houssem'
     Database.Password: '@Aa123456' # to be secured in Key Vault
@@ -202,7 +203,7 @@ stages:
       displayName: Validate ARM templates
       enabled: ${{ parameters.runCompletePipeline }}
       inputs:
-        azureSubscription: 'WebAppWithDatabaseDemo_spn'
+        azureSubscription: $(azureSubscription) # 'WebAppWithDatabaseDemo_spn'
         action: 'Create Or Update Resource Group'
         resourceGroupName: '$(ResourceGroupName)'
         location: 'West Europe'
@@ -229,7 +230,7 @@ stages:
     - task: AzureResourceGroupDeployment@2
       displayName: Deploy ARM templates
       inputs:
-        azureSubscription: 'WebAppWithDatabaseDemo_spn'
+        azureSubscription: $(azureSubscription) # 'WebAppWithDatabaseDemo_spn'
         action: 'Create Or Update Resource Group'
         resourceGroupName: '$(ResourceGroupName)'
         location: 'West Europe'
