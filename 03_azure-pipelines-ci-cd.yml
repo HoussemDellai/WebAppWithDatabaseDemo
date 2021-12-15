@@ -17,7 +17,7 @@ trigger:
      - README.md
      - 01_azure-pipelines-ci.yml
      - 02_azure-pipelines-ci.yml
-     - azure-pipelines-ci-cd.yml
+     - 03_azure-pipelines-ci-cd.yml
 
 parameters:
 - name: runCompletePipeline
