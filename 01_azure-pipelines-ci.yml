@@ -8,26 +8,26 @@ variables:
   
 steps:
 - task: DotNetCoreCLI@2
-  displayName: Restore
+  displayName: Restore Nuget Packages
   inputs:
     command: restore
     projects: '**/WebApp.csproj'
 
 - task: DotNetCoreCLI@2
-  displayName: Build
+  displayName: Build Web App
   inputs:
     projects: '**/WebApp.csproj'
     arguments: '--configuration $(BuildConfiguration)'
 
 - task: DotNetCoreCLI@2
-  displayName: Test
+  displayName: Run Unit Tests
   inputs:
     command: test
     projects: '**/*UnitTest*.csproj'
     arguments: '--configuration $(BuildConfiguration)'
 
 - task: DotNetCoreCLI@2
-  displayName: Publish
+  displayName: Publish Web App (.zip)
   inputs:
     command: publish
     publishWebProjects: True
