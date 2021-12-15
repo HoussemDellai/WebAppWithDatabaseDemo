@@ -1,7 +1,7 @@
 trigger: 'none' # will disable CI builds entirely
 
 pool:
-  name: Hosted VS2017
+  vmImage: 'windows-2019'
     
 variables:
   BuildConfiguration: release
