@@ -215,7 +215,7 @@ stages:
         deploymentMode: 'Validation'
 
     - task: AzSKARMTemplateChecker@4
-      displayName: Scan ARM templates
+      displayName: Scan ARM templates using AzSK
       enabled: ${{ parameters.runCompletePipeline }}
       continueOnError: true
       inputs:
@@ -223,6 +223,24 @@ stages:
         ARMTemplateParameterFilePath: '$(System.DefaultWorkingDirectory)/arm/WebSiteSQLDatabase.parameters.json'
 
 # scan ARM template using TTK
+
+    - task: RunARMTTKTests@1
+      displayName: Scan ARM templates using TTK
+      inputs:
+        templatelocation: '$(System.DefaultWorkingDirectory)/arm/'
+        resultLocation: '$(System.DefaultWorkingDirectory)/arm/results'
+        allTemplatesMain: false
+        cliOutputResults: true
+        ignoreExitCode: true
+        # includeTests: 'VM Images Should Use Latest Version,Resources Should Have Location'
+        # skipTests: 'VM Images Should Use Latest Version,Resources Should Have Location'
+
+    - task: PublishTestResults@2
+      displayName: Publish TTK Test Results
+      inputs:
+        testResultsFormat: 'NUnit'
+        testResultsFiles: '$(System.DefaultWorkingDirectory)\arm\results\*-armttk.xml'
+      condition: always()
 
 # What-IF: 
 
@@ -363,7 +381,7 @@ stages:
   displayName: Test Stage
   jobs:
   - job:
-    displayName: Deploy to Test Job
+    displayName: Deploy to Test
     steps:
       - task: CmdLine@2
         inputs:
@@ -373,7 +391,7 @@ stages:
   displayName: Prod Stage
   jobs:
   - job:
-    displayName: Deploy to Prod Job
+    displayName: Deploy to Prod
     steps:
       - task: CmdLine@2
         inputs:
