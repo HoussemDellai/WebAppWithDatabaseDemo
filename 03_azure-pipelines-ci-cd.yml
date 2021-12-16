@@ -224,7 +224,17 @@ stages:
 
 # scan ARM template using TTK
 
-# What-IF: https://4bes.nl/2021/03/06/test-arm-templates-with-what-if/
+# What-IF: 
+
+    - task: AzureCLI@2
+      displayName: Preview Template Changes
+      inputs:
+        workingDirectory: $(System.DefaultWorkingDirectory)/arm/
+        azureSubscription: 'WebAppWithDatabaseDemo_spn'
+        scriptType: 'bash'
+        scriptLocation: 'inlineScript'
+        inlineScript: 'az deployment group what-if --resource-group $(ResourceGroupName) --name rollout01 --template-file  WebSiteSQLDatabase.json --parameters WebSiteSQLDatabase.parameters.json'
+        arguments: '-hostingPlanName $(hostingPlanName) -skuName "F1" -skuCapacity 1 -administratorLogin $(Database.Admin) -administratorLoginPassword $(Database.Password) -databaseName $(Database.Name) -collation "SQL_Latin1_General_CP1_CI_AS" -edition "Basic" -maxSizeBytes "1073741824" -requestedServiceObjectiveName "Basic" -webSiteName $(WebAppName) -sqlserverName $(SqlServerName)'
 
 # replace AzureResourceGroupDeployment@2 with AzureResourceManagerTemplateDeploymentV3
 # https://github.com/microsoft/azure-pipelines-tasks/tree/master/Tasks/AzureResourceManagerTemplateDeploymentV3
@@ -236,8 +246,8 @@ stages:
         resourceGroupName: '$(ResourceGroupName)'
         location: 'West Europe'
         templateLocation: 'Linked artifact'
-        csmFile: '$(System.DefaultWorkingDirectory)/**/arm/WebSiteSQLDatabase.json'
-        csmParametersFile: '$(System.DefaultWorkingDirectory)/**/arm/WebSiteSQLDatabase.parameters.json'
+        csmFile: '$(System.DefaultWorkingDirectory)/arm/WebSiteSQLDatabase.json'
+        csmParametersFile: '$(System.DefaultWorkingDirectory)/arm/WebSiteSQLDatabase.parameters.json'
         overrideParameters: '-hostingPlanName $(hostingPlanName) -skuName "F1" -skuCapacity 1 -administratorLogin $(Database.Admin) -administratorLoginPassword $(Database.Password) -databaseName $(Database.Name) -collation "SQL_Latin1_General_CP1_CI_AS" -edition "Basic" -maxSizeBytes "1073741824" -requestedServiceObjectiveName "Basic" -webSiteName $(WebAppName) -sqlserverName $(SqlServerName)'
         deploymentMode: Complete
 
