@@ -242,10 +242,8 @@ stages:
         testResultsFiles: '$(System.DefaultWorkingDirectory)\arm\results\*-armttk.xml'
       condition: always()
 
-# What-IF: 
-
     - task: AzureCLI@2
-      displayName: Preview Template Changes
+      displayName: Preview Template Changes (What-If)
       inputs:
         workingDirectory: $(System.DefaultWorkingDirectory)/arm/
         azureSubscription: 'WebAppWithDatabaseDemo_spn'
@@ -254,8 +252,6 @@ stages:
         inlineScript: 'az deployment group what-if --resource-group $(ResourceGroupName) --name rollout01 --template-file  WebSiteSQLDatabase.json --parameters WebSiteSQLDatabase.parameters.json'
         arguments: '-hostingPlanName $(hostingPlanName) -skuName "F1" -skuCapacity 1 -administratorLogin $(Database.Admin) -administratorLoginPassword $(Database.Password) -databaseName $(Database.Name) -collation "SQL_Latin1_General_CP1_CI_AS" -edition "Basic" -maxSizeBytes "1073741824" -requestedServiceObjectiveName "Basic" -webSiteName $(WebAppName) -sqlserverName $(SqlServerName)'
 
-# replace AzureResourceGroupDeployment@2 with AzureResourceManagerTemplateDeploymentV3
-# https://github.com/microsoft/azure-pipelines-tasks/tree/master/Tasks/AzureResourceManagerTemplateDeploymentV3
     - task: AzureResourceManagerTemplateDeployment@3
       displayName: Deploy ARM templates
       inputs:
