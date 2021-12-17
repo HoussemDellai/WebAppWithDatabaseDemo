@@ -11,7 +11,7 @@ Project("{151D2E53-A2C4-4D7D-83FE-D05416EBD58E}") = "AzureResourceGroupDeploymen
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeleniumUiTests", "SeleniumUiTests\SeleniumUiTests.csproj", "{655A2079-A99C-4539-99CC-FD772A0B10BA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApp", "WebApp1\WebApp.csproj", "{6C5D97EF-0CBF-418B-B00F-D73FE8456807}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApp", "WebApp\WebApp.csproj", "{F3673017-A055-458C-9D46-A7BAAB662E1E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,10 +37,10 @@ Global
 		{655A2079-A99C-4539-99CC-FD772A0B10BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{655A2079-A99C-4539-99CC-FD772A0B10BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{655A2079-A99C-4539-99CC-FD772A0B10BA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6C5D97EF-0CBF-418B-B00F-D73FE8456807}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6C5D97EF-0CBF-418B-B00F-D73FE8456807}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6C5D97EF-0CBF-418B-B00F-D73FE8456807}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6C5D97EF-0CBF-418B-B00F-D73FE8456807}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3673017-A055-458C-9D46-A7BAAB662E1E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3673017-A055-458C-9D46-A7BAAB662E1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3673017-A055-458C-9D46-A7BAAB662E1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3673017-A055-458C-9D46-A7BAAB662E1E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
