@@ -5,13 +5,13 @@ VisualStudioVersion = 17.0.31919.166
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "WebApp.Database", "WebApp.Database\WebApp.Database.sqlproj", "{E329DEAF-3824-438D-92E3-912519D79930}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApp.UnitTest", "WebApp.UnitTest\WebApp.UnitTest.csproj", "{DD134753-D2C9-4805-B4F5-FC26BDDBB496}"
-EndProject
 Project("{151D2E53-A2C4-4D7D-83FE-D05416EBD58E}") = "AzureResourceGroupDeployment", "AzureResourceGroupDeployment\AzureResourceGroupDeployment.deployproj", "{BFCF79CD-CFBD-4E44-A79F-B5C0E95F0F49}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeleniumUiTests", "SeleniumUiTests\SeleniumUiTests.csproj", "{655A2079-A99C-4539-99CC-FD772A0B10BA}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApp", "WebApp\WebApp.csproj", "{F3673017-A055-458C-9D46-A7BAAB662E1E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApp.UnitTest", "WebApp.UnitTest\WebApp.UnitTest.csproj", "{5830C5AE-952E-48BF-8237-2AE5FEB18EBE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,10 +25,6 @@ Global
 		{E329DEAF-3824-438D-92E3-912519D79930}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E329DEAF-3824-438D-92E3-912519D79930}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E329DEAF-3824-438D-92E3-912519D79930}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{DD134753-D2C9-4805-B4F5-FC26BDDBB496}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DD134753-D2C9-4805-B4F5-FC26BDDBB496}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DD134753-D2C9-4805-B4F5-FC26BDDBB496}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DD134753-D2C9-4805-B4F5-FC26BDDBB496}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BFCF79CD-CFBD-4E44-A79F-B5C0E95F0F49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BFCF79CD-CFBD-4E44-A79F-B5C0E95F0F49}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BFCF79CD-CFBD-4E44-A79F-B5C0E95F0F49}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -41,6 +37,10 @@ Global
 		{F3673017-A055-458C-9D46-A7BAAB662E1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F3673017-A055-458C-9D46-A7BAAB662E1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F3673017-A055-458C-9D46-A7BAAB662E1E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5830C5AE-952E-48BF-8237-2AE5FEB18EBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5830C5AE-952E-48BF-8237-2AE5FEB18EBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5830C5AE-952E-48BF-8237-2AE5FEB18EBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5830C5AE-952E-48BF-8237-2AE5FEB18EBE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
