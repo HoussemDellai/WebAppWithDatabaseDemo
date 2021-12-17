@@ -27,7 +27,7 @@ steps:
     arguments: '--configuration $(BuildConfiguration)'
 
 - task: DotNetCoreCLI@2
-  displayName: Publish Web App (.zip)
+  displayName: Create Web App Package (.zip)
   inputs:
     command: publish
     publishWebProjects: True
