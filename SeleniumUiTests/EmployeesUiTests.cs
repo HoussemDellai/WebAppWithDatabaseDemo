@@ -10,7 +10,7 @@ namespace SeleniumUiTests
     [TestClass]
     public class EmployeesUiTests
     {
-        private string _websiteURL = "http://localhost:52380/";
+        private string _websiteURL = "https://localhost:7048/";
         //private string _websiteURL = "https://ignite-webapp-test-997.azurewebsites.net/";
         private WebDriver _browserDriver;
         public TestContext TestContext { get; set; }
@@ -56,7 +56,9 @@ namespace SeleniumUiTests
             TestContext.AddResultFile(fileName);
             
             // Act
-            _browserDriver.FindElement(By.CssSelector("input.btn.btn-default")).Click();
+            _browserDriver.FindElement(By.Id("SubmitButton")).Click();
+            //_browserDriver.FindElement(By.CssSelector("btn btn-primary")).Click();
+            //_browserDriver.FindElement(By.CssSelector("input.btn.btn-default")).Click();
 
             // Assert
             Assert.IsTrue(_browserDriver.PageSource.Contains(fullname));
