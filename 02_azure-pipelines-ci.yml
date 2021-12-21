@@ -40,6 +40,7 @@ jobs:
      }
     workingDirectory: WebApp
     displayName: 'PS : Add Project GUID'
+    enabled: false
   
   - task: SonarCloudPrepare@1
     displayName: 'Prepare analysis on SonarCloud'
