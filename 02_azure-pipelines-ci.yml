@@ -24,8 +24,6 @@ jobs:
       projects: '**/WebApp.csproj'
   
   - powershell: |
-     Write-Host "Hello World"
-     
      $paths = Get-ChildItem -include *.csproj -Recurse
      foreach($pathobject in $paths) 
      {
