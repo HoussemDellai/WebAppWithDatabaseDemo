@@ -7,4 +7,3 @@
 	[Address]	 NVARCHAR (50)  NULL, 
     CONSTRAINT [PK_Employee] PRIMARY KEY CLUSTERED ([Id] ASC)
 );
-
