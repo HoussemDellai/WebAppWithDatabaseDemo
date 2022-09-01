@@ -7,10 +7,10 @@ pr:
       - docs/*
       - README.md
 
-trigger:
- branches:
-   include:
-     - master
+trigger: none
+# branches:
+#   include:
+#     - master
  paths:
    exclude:
      - docs/*
