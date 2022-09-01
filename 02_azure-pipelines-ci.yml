@@ -1,5 +1,8 @@
-trigger: 'none' # will disable CI builds entirely
-   
+trigger: # 'none' # will disable CI builds entirely
+- master
+pr:
+- master
+
 jobs:
 - job: WebApp
   displayName: 'Build Web App'
