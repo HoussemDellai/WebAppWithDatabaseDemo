@@ -2,6 +2,7 @@ trigger: # 'none' # will disable CI builds entirely
 - master
 pr:
 - master
+- releases/*
 
 jobs:
 - job: WebApp
