@@ -1,3 +1,4 @@
+# not needed anymore
 # This script will add Project GUID into the .csproj.
 # That is required by Sonar Cloud or Sonar Qube.
 # Only needed for .NET Core .csproj projects.
