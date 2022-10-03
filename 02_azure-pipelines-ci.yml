@@ -1,8 +1,8 @@
-trigger: # 'none' # will disable CI builds entirely
-- master
-pr:
-- master
-- releases/*
+trigger: 'none' # will disable CI builds entirely
+# - master
+pr: none
+# - master
+# - releases/*
 
 jobs:
 - job: WebApp
