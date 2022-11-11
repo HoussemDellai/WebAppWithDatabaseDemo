@@ -64,6 +64,7 @@ jobs:
       PathtoPublish: '$(build.artifactstagingdirectory)'
 
 - job: Database
+  dependsOn: WebApp
   displayName: 'Build Database'
   pool:
     vmImage: 'windows-2019'
@@ -81,6 +82,7 @@ jobs:
       ArtifactName: dacpac
 
 - job: Selenium
+  dependsOn: Database
   displayName: 'Build UI Tests'
   pool:
     vmImage: 'windows-2019'
@@ -106,6 +108,7 @@ jobs:
       ArtifactName: 'UI-Test'
 
 - job: Infrastructure
+  dependsOn: Selenium
   displayName: 'Copy Infrastructure files (ARM)'
   pool:
     vmImage: 'ubuntu-latest'
