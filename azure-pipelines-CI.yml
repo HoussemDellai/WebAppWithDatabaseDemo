@@ -73,6 +73,11 @@ jobs:
     vmImage: 'windows-2019'
 
   steps:
+  - task: efcore-migration-script-generator-task@1
+    inputs:
+      projectpath: '**/WebApp.csproj'
+      databasecontexts: 'WebAppContext'
+      targetfolder: '$(build.artifactstagingdirectory)/migrations'
   - task: MSBuild@1
     displayName: 'Build solution WebApp.Database.sqlproj'
     inputs:
@@ -82,7 +87,9 @@ jobs:
   - task: PublishBuildArtifacts@1
     displayName: 'Publish Artifact (Dacpac)'
     inputs:
-      ArtifactName: dacpac
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+      ArtifactName: 'MigrationsScript'
+      publishLocation: 'Container'
 
 - job: Selenium
   dependsOn: Database
