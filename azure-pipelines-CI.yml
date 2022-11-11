@@ -29,7 +29,7 @@ jobs:
       SonarCloud: 'SonarCloud'
       organization: 'andremqueiros'
       scannerMode: 'MSBuild'
-      projectKey: 'WebAppWithDatabaseDemo'
+      projectKey: 'udemy-DotNet-Core-Mvc-App'
   
   - task: DotNetCoreCLI@2
     displayName: Build
