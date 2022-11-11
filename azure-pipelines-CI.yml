@@ -1,4 +1,7 @@
-trigger: 'none' # will disable CI builds entirely
+trigger:
+ branches:
+   include:
+     - master
 
 jobs:
 - job: WebApp
