@@ -1,7 +1,5 @@
-trigger:
- branches:
-   include:
-     - master
+trigger: "none"
+
 
 jobs:
 - job: WebApp
@@ -84,7 +82,7 @@ jobs:
     inputs:
       command: custom
       custom: 'tool '
-      arguments: install dotnet-ef -Version 6
+      arguments: install dotnet-ef --version 6
   - task: efcore-migration-script-generator-task@1
     inputs:
       projectpath: '**/WebApp.csproj'
