@@ -87,7 +87,7 @@ jobs:
     inputs:
       projectpath: '**/WebApp.csproj'
       databasecontexts: 'WebAppContext'
-      targetfolder: '$(build.artifactstagingdirectory)/migrations'
+      targetfolder: '$(build.artifactstagingdirectory)'
   - task: MSBuild@1
     displayName: 'Build solution WebApp.Database.sqlproj'
     inputs:
