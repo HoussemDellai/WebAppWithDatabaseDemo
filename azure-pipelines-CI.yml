@@ -65,7 +65,7 @@ jobs:
 #       PathtoPublish: '$(build.artifactstagingdirectory)'
 
 - job: Database
-  dependsOn: WebApp
+  # dependsOn: WebApp
   displayName: 'database migrations'
   pool:
     Default: 'dockerAgent'
