@@ -1,5 +1,6 @@
 
 trigger: 'none' # will disable CI builds entirely
+pr: 'none'
 
 pool:
   vmImage: 'windows-2019'
