@@ -2,73 +2,73 @@ trigger: "none"
 
 
 jobs:
-- job: WebApp
-  displayName: 'Build Web App'
-  pool:
-    default: 'dockeragent'
-  variables:
-    BuildConfiguration: release
+# - job: WebApp
+#   displayName: 'Build Web App'
+#   pool:
+#     Default: 'dockerAgent'
+#   variables:
+#     BuildConfiguration: release
   
-  steps:
+#   steps:
   
-  - task: UseDotNet@2
-    displayName: Install .NET 6 sdk
-    inputs:
-      packageType: sdk
-      version: 6.0.x
-      installationPath: $(Agent.ToolsDirectory)/dotnet
+#   - task: UseDotNet@2
+#     displayName: Install .NET 6 sdk
+#     inputs:
+#       packageType: sdk
+#       version: 6.0.x
+#       installationPath: $(Agent.ToolsDirectory)/dotnet
 
-  - task: DotNetCoreCLI@2
-    displayName: Restore
-    inputs:
-      command: restore
-      projects: '**/WebApp.csproj'
+#   - task: DotNetCoreCLI@2
+#     displayName: Restore
+#     inputs:
+#       command: restore
+#       projects: '**/WebApp.csproj'
     
-  - task: SonarCloudPrepare@1
-    displayName: 'Prepare analysis on SonarCloud'
-    inputs:
-      SonarCloud: 'SonarCloud'
-      organization: 'andremqueiros'
-      scannerMode: 'MSBuild'
-      projectKey: 'udemy-DotNet-Core-Mvc-App'
+#   - task: SonarCloudPrepare@1
+#     displayName: 'Prepare analysis on SonarCloud'
+#     inputs:
+#       SonarCloud: 'SonarCloud'
+#       organization: 'andremqueiros'
+#       scannerMode: 'MSBuild'
+#       projectKey: 'udemy-DotNet-Core-Mvc-App'
   
-  - task: DotNetCoreCLI@2
-    displayName: Build
-    inputs:
-      projects: '**/WebApp.csproj'
-      arguments: '--configuration $(BuildConfiguration)'
+#   - task: DotNetCoreCLI@2
+#     displayName: Build
+#     inputs:
+#       projects: '**/WebApp.csproj'
+#       arguments: '--configuration $(BuildConfiguration)'
   
-  - task: DotNetCoreCLI@2
-    displayName: Test
-    inputs:
-      command: test
-      projects: '**/*UnitTest*.csproj'
-      arguments: '--configuration $(BuildConfiguration)'
+#   - task: DotNetCoreCLI@2
+#     displayName: Test
+#     inputs:
+#       command: test
+#       projects: '**/*UnitTest*.csproj'
+#       arguments: '--configuration $(BuildConfiguration)'
   
-  - task: DotNetCoreCLI@2
-    displayName: Publish
-    inputs:
-      command: publish
-      publishWebProjects: True
-      arguments: '--configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory)'
-      zipAfterPublish: True
+#   - task: DotNetCoreCLI@2
+#     displayName: Publish
+#     inputs:
+#       command: publish
+#       publishWebProjects: True
+#       arguments: '--configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory)'
+#       zipAfterPublish: True
   
-  - task: SonarCloudAnalyze@1
-    displayName: 'Run Code Analysis'
+#   - task: SonarCloudAnalyze@1
+#     displayName: 'Run Code Analysis'
   
-  - task: SonarCloudPublish@1
-    displayName: 'Publish Quality Gate Result'
+#   - task: SonarCloudPublish@1
+#     displayName: 'Publish Quality Gate Result'
   
-  - task: PublishBuildArtifacts@1
-    displayName: 'Publish Artifact (WebApp.zip)'
-    inputs:
-      PathtoPublish: '$(build.artifactstagingdirectory)'
+#   - task: PublishBuildArtifacts@1
+#     displayName: 'Publish Artifact (WebApp.zip)'
+#     inputs:
+#       PathtoPublish: '$(build.artifactstagingdirectory)'
 
 - job: Database
   dependsOn: WebApp
   displayName: 'database migrations'
   pool:
-    default: 'dockeragent'
+    Default: 'dockerAgent'
 
   steps: 
   - task: DotNetCoreCLI@2
@@ -96,42 +96,42 @@ jobs:
       ArtifactName: 'MigrationsScript'
       publishLocation: 'Container'
 
-- job: Selenium
-  dependsOn: Database
-  displayName: 'Build UI Tests'
-  pool:
-    default: 'dockeragent'
+# - job: Selenium
+#   dependsOn: Database
+#   displayName: 'Build UI Tests'
+#   pool:
+#     Default: 'dockerAgent'
 
-  steps:
-  - task: NuGetToolInstaller@0
-    displayName: 'Use NuGet 4.3.0'
+#   steps:
+#   - task: NuGetToolInstaller@0
+#     displayName: 'Use NuGet 4.3.0'
 
-  - task: NuGetCommand@2
-    displayName: 'NuGet restore'
-    inputs:
-      restoreSolution: WebAppWithDatabase.sln
+#   - task: NuGetCommand@2
+#     displayName: 'NuGet restore'
+#     inputs:
+#       restoreSolution: WebAppWithDatabase.sln
 
-  - task: MSBuild@1
-    displayName: 'Build project SeleniumUiTests.csproj'
-    inputs:
-      solution: SeleniumUiTests/SeleniumUiTests.csproj
-      msbuildArguments: '/p:OutDir=$(Build.ArtifactStagingDirectory)'
+#   - task: MSBuild@1
+#     displayName: 'Build project SeleniumUiTests.csproj'
+#     inputs:
+#       solution: SeleniumUiTests/SeleniumUiTests.csproj
+#       msbuildArguments: '/p:OutDir=$(Build.ArtifactStagingDirectory)'
 
-  - task: PublishBuildArtifacts@1
-    displayName: 'Publish Artifact: UI-Test'
-    inputs:
-      ArtifactName: 'UI-Test'
+#   - task: PublishBuildArtifacts@1
+#     displayName: 'Publish Artifact: UI-Test'
+#     inputs:
+#       ArtifactName: 'UI-Test'
 
-- job: Infrastructure
-  dependsOn: Selenium
-  displayName: 'Copy Infrastructure files (ARM)'
-  pool:
-    default: 'dockeragent'
-  steps:
-  - task: PublishBuildArtifacts@1
-    displayName: 'Publish Artifact: ARM templates'
-    inputs:
-      PathtoPublish: AzureResourceGroupDeployment
-      ArtifactName: arm
+# - job: Infrastructure
+#   dependsOn: Selenium
+#   displayName: 'Copy Infrastructure files (ARM)'
+#   pool:
+#     Default: 'dockerAgent'
+#   steps:
+#   - task: PublishBuildArtifacts@1
+#     displayName: 'Publish Artifact: ARM templates'
+#     inputs:
+#       PathtoPublish: AzureResourceGroupDeployment
+#       ArtifactName: arm
 
 
