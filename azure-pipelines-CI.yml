@@ -1,4 +1,12 @@
 trigger: "none"
+pr:
+  branches:
+    include:
+      - master
+  paths:
+    exclude:
+      - docs/*
+      - README.md
 
 
 jobs:
