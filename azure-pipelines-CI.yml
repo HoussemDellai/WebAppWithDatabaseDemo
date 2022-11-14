@@ -73,12 +73,23 @@ jobs:
     vmImage: 'windows-2019'
 
   steps:
+  - task: DotNetCoreCLI@2
+    displayName: New Manifest for tool
+    inputs:
+      command: custom
+      custom: 'new '
+      arguments: tool-manifest
+  - task: DotNetCoreCLI@2
+    displayName: Install EF Tool
+    inputs:
+      command: custom
+      custom: 'tool '
+      arguments: install dotnet-ef
   - task: efcore-migration-script-generator-task@1
     inputs:
       projectpath: '**/WebApp.csproj'
       databasecontexts: 'WebAppContext'
       targetfolder: '$(build.artifactstagingdirectory)/migrations'
-      installdependencies: true
   - task: MSBuild@1
     displayName: 'Build solution WebApp.Database.sqlproj'
     inputs:
