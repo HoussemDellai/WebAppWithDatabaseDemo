@@ -78,6 +78,7 @@ jobs:
       projectpath: '**/WebApp.csproj'
       databasecontexts: 'WebAppContext'
       targetfolder: '$(build.artifactstagingdirectory)/migrations'
+      installdependencies: true
   - task: MSBuild@1
     displayName: 'Build solution WebApp.Database.sqlproj'
     inputs:
