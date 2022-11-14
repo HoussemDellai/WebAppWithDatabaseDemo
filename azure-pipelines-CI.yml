@@ -89,7 +89,7 @@ jobs:
       publishLocation: 'Container'
 
 - job: Selenium
-  dependsOn: Database
+  dependsOn: WebApp
   displayName: 'Build UI Tests'
   pool:
     vmImage: 'windows-2019'
