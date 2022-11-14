@@ -85,7 +85,7 @@ jobs:
       arguments: install dotnet-ef --version 6
   - task: efcore-migration-script-generator-task@1
     inputs:
-      projectpath: 'WebApp.csproj'
+      projectpath: 'WebApp\WebApp.csproj'
       databasecontexts: 'WebAppContext'
       targetfolder: '$(build.artifactstagingdirectory)'
 
