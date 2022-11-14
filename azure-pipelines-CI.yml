@@ -63,6 +63,14 @@ jobs:
     displayName: 'Publish Artifact (WebApp.zip)'
     inputs:
       PathtoPublish: '$(build.artifactstagingdirectory)'
+
+- job: Database
+  dependsOn: WebApp
+  displayName: 'database migrations'
+  pool:
+    vmImage: 'windows-2019'
+
+  steps: 
   - task: DotNetCoreCLI@2
     displayName: New Manifest for tool
     inputs:
@@ -77,10 +85,10 @@ jobs:
       arguments: install dotnet-ef --version 6
   - task: efcore-migration-script-generator-task@1
     inputs:
-      projectpath: '**/WebApp.csproj'
+      projectpath: 'WebApp.csproj'
       databasecontexts: 'WebAppContext'
       targetfolder: '$(build.artifactstagingdirectory)'
-  
+
   - task: PublishBuildArtifacts@1
     displayName: 'Publish Artifact (SQLscript)'
     inputs:
