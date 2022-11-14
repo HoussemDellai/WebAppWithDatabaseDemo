@@ -68,7 +68,7 @@ jobs:
   # dependsOn: WebApp
   displayName: 'database migrations'
   pool:
-    Default: 'dockerAgent'
+    name: Default
 
   steps: 
   - task: DotNetCoreCLI@2
