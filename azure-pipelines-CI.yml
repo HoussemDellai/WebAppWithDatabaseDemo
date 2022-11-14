@@ -84,7 +84,7 @@ jobs:
     inputs:
       command: custom
       custom: 'tool '
-      arguments: install dotnet-ef
+      arguments: install dotnet-ef 6
   - task: efcore-migration-script-generator-task@1
     inputs:
       projectpath: '**/WebApp.csproj'
