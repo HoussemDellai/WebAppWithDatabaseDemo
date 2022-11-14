@@ -2,27 +2,27 @@ trigger: "none"
 
 
 jobs:
-# - job: WebApp
-#   displayName: 'Build Web App'
-#   pool:
-#     Default: 'dockerAgent'
-#   variables:
-#     BuildConfiguration: release
+- job: WebApp
+  displayName: 'Build Web App'
+  pool:
+    name: Default
+  variables:
+    BuildConfiguration: release
   
-#   steps:
+  steps:
   
-#   - task: UseDotNet@2
-#     displayName: Install .NET 6 sdk
-#     inputs:
-#       packageType: sdk
-#       version: 6.0.x
-#       installationPath: $(Agent.ToolsDirectory)/dotnet
+  # - task: UseDotNet@2
+  #   displayName: Install .NET 6 sdk
+  #   inputs:
+  #     packageType: sdk
+  #     version: 6.0.x
+  #     installationPath: $(Agent.ToolsDirectory)/dotnet
 
-#   - task: DotNetCoreCLI@2
-#     displayName: Restore
-#     inputs:
-#       command: restore
-#       projects: '**/WebApp.csproj'
+  - task: DotNetCoreCLI@2
+    displayName: Restore
+    inputs:
+      command: restore
+      projects: '**/WebApp.csproj'
     
 #   - task: SonarCloudPrepare@1
 #     displayName: 'Prepare analysis on SonarCloud'
@@ -32,11 +32,11 @@ jobs:
 #       scannerMode: 'MSBuild'
 #       projectKey: 'udemy-DotNet-Core-Mvc-App'
   
-#   - task: DotNetCoreCLI@2
-#     displayName: Build
-#     inputs:
-#       projects: '**/WebApp.csproj'
-#       arguments: '--configuration $(BuildConfiguration)'
+  - task: DotNetCoreCLI@2
+    displayName: Build
+    inputs:
+      projects: '**/WebApp.csproj'
+      arguments: '--configuration $(BuildConfiguration)'
   
 #   - task: DotNetCoreCLI@2
 #     displayName: Test
@@ -45,13 +45,13 @@ jobs:
 #       projects: '**/*UnitTest*.csproj'
 #       arguments: '--configuration $(BuildConfiguration)'
   
-#   - task: DotNetCoreCLI@2
-#     displayName: Publish
-#     inputs:
-#       command: publish
-#       publishWebProjects: True
-#       arguments: '--configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory)'
-#       zipAfterPublish: True
+  - task: DotNetCoreCLI@2
+    displayName: Publish
+    inputs:
+      command: publish
+      publishWebProjects: True
+      arguments: '--configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory)'
+      zipAfterPublish: True
   
 #   - task: SonarCloudAnalyze@1
 #     displayName: 'Run Code Analysis'
@@ -59,13 +59,13 @@ jobs:
 #   - task: SonarCloudPublish@1
 #     displayName: 'Publish Quality Gate Result'
   
-#   - task: PublishBuildArtifacts@1
-#     displayName: 'Publish Artifact (WebApp.zip)'
-#     inputs:
-#       PathtoPublish: '$(build.artifactstagingdirectory)'
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Artifact (WebApp.zip)'
+    inputs:
+      PathtoPublish: '$(build.artifactstagingdirectory)'
 
 - job: Database
-  # dependsOn: WebApp
+  dependsOn: WebApp
   displayName: 'database migrations'
   pool:
     vmImage: 'windows-2019'
@@ -88,7 +88,7 @@ jobs:
     inputs:
       command: custom
       custom: 'tool '
-      arguments: install dotnet-ef --version 6
+      arguments: install dotnet-ef
   - task: efcore-migration-script-generator-task@1
     inputs:
       projectpath: 'WebApp\WebApp.csproj'
