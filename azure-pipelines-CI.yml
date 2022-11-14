@@ -68,7 +68,7 @@ jobs:
   # dependsOn: WebApp
   displayName: 'database migrations'
   pool:
-    name: Default
+    vmImage: 'windows-2019'
 
   steps: 
   - task: DotNetCoreCLI@2
