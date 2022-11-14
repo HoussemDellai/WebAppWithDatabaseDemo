@@ -5,7 +5,7 @@ jobs:
 - job: WebApp
   displayName: 'Build Web App'
   pool:
-    vmImage: 'windows-2019'
+    default: 'dockeragent'
   variables:
     BuildConfiguration: release
   
@@ -68,7 +68,7 @@ jobs:
   dependsOn: WebApp
   displayName: 'database migrations'
   pool:
-    vmImage: 'windows-2019'
+    default: 'dockeragent'
 
   steps: 
   - task: DotNetCoreCLI@2
@@ -97,10 +97,10 @@ jobs:
       publishLocation: 'Container'
 
 - job: Selenium
-  dependsOn: WebApp
+  dependsOn: Database
   displayName: 'Build UI Tests'
   pool:
-    vmImage: 'windows-2019'
+    default: 'dockeragent'
 
   steps:
   - task: NuGetToolInstaller@0
@@ -126,7 +126,7 @@ jobs:
   dependsOn: Selenium
   displayName: 'Copy Infrastructure files (ARM)'
   pool:
-    vmImage: 'ubuntu-latest'
+    default: 'dockeragent'
   steps:
   - task: PublishBuildArtifacts@1
     displayName: 'Publish Artifact: ARM templates'
