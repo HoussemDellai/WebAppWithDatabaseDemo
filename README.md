@@ -3,6 +3,7 @@ Sample ASP.NET Core MVC app with database, UI tests (Selenium) and ARM template 
 #executing Mandatory Mod recap.
 #latest mod reacpII.
 #still commiting changes AB@2
+#ADDING 4TH COMMIT
 </br>
 
 <table>
