@@ -5,7 +5,7 @@ Sample ASP.NET Core MVC app with database, UI tests (Selenium) and ARM template 
 #still commiting changes AB@2
 #ADDING 4TH COMMIT
 </br>
-
+#fix bugs 4
 <table>
   <tr>
     <td>Build status</td>
