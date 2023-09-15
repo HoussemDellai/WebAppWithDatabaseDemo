@@ -54,7 +54,7 @@ jobs:
   - task: DotNetCoreCLI@2
     displayName: Build
     inputs:
-      command: build
+      #command: build
       projects: '**/WebApp.csproj'
       arguments: '--configuration $(BuildConfiguration)'
   
